@@ -1,33 +1,60 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import bookData from './data/bookData.js'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [health, setHealth] = useState(0);
+  const [page, setPage] = useState(1);
+  const [nextPage, setNextPage] = useState(1);
+  const [choices, setChoices] = useState([]);
+  const [inventory, setInventory] = useState({});
+  const [healthCondition, setHealthCondition] = useState({
+    healthy : true,
+    sick : false,
+    injuredWithFork : false,
+  });
+  const [bagHolder, setBagHolder] = useState('');
+  const [magicMushrooms, setMagicMushrooms] = useState({
+    yellow : 0,
+    blue : 0,
+    red : 0,
+    green : 0,
+    black : 0,
+  });
+
+  const addToInventory = (item, quantity) => {
+    setInventory((prevInventory) => ({
+      ...prevInventory,
+      [item]: (prevInventory[item] || 0) + quantity,
+    }));
+  };
+  
+  const removeFromInventory = (item, quantity) => {
+    setInventory((prevInventory) => ({
+      ...prevInventory,
+      [item]: Math.max((prevInventory[item] || 0) - quantity, 0),
+    }));
+  };
+  
+  function showPage(page) {
+    setPage(page);
+    setChoices(bookData[page].choices);
+    setNextPage(bookData[page].nextPage);
+  }
+
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
+      <div id='text'>
         <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
+        {page.map((p) => {p.text})}
         </p>
+        <div id='choices'>
+          {choices.map((choice) => {<button> {choice} </button>})}
+        </div>
+        {page.moreText && <p>{page.moreText}</p>}
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+
     </>
   )
 }
