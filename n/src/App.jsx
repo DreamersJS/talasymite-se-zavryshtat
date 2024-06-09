@@ -9,50 +9,29 @@ function App() {
   const [choices, setChoices] = useState([]);
   const [inventory, setInventory] = useState({});
   const [healthCondition, setHealthCondition] = useState({
-    healthy : true,
-    sick : false,
-    injuredWithFork : false,
+    healthy: true,
+    sick: false,
+    injuredWithFork: false,
   });
   const [bagHolder, setBagHolder] = useState('');
   const [magicMushrooms, setMagicMushrooms] = useState({
-    yellow : 0,
-    blue : 0,
-    red : 0,
-    green : 0,
-    black : 0,
+    yellow: 0,
+    blue: 0,
+    red: 0,
+    green: 0,
+    black: 0,
   });
-
-  const addToInventory = (item, quantity) => {
-    setInventory((prevInventory) => ({
-      ...prevInventory,
-      [item]: (prevInventory[item] || 0) + quantity,
-    }));
-  };
-  
-  const removeFromInventory = (item, quantity) => {
-    setInventory((prevInventory) => ({
-      ...prevInventory,
-      [item]: Math.max((prevInventory[item] || 0) - quantity, 0),
-    }));
-  };
-  
-  function showPage(page) {
-    setPage(page);
-    setChoices(bookData[page].choices);
-    setNextPage(bookData[page].nextPage);
-  }
-
 
   return (
     <>
       <div id='text'>
         <p>
-        {page.map((p) => {p.text})}
+          <p>{bookData[page].text}</p>
         </p>
         <div id='choices'>
-          {choices.map((choice) => {<button> {choice} </button>})}
+          {choices.map((choice, index) => { <button key={index}> {choice} </button> })}
         </div>
-        {page.moreText && <p>{page.moreText}</p>}
+        {bookData[page].moreText && <p>{bookData[page].moreText}</p>}
       </div>
 
     </>
