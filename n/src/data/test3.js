@@ -68,9 +68,8 @@ export const bookData = {
             text: 'You are fighting the wolf.',
             choices: [
                 { text: 'You survived', nextPage: 12 }, // to think of a battle system and auto-next page maybe????????
-                { text: 'You died', nextPage: 1 }, 
+                { text: 'You died', nextPage: 1 }, // auto lose and reset button?????? // end: true, 
             ],
-            end: true,
         },
         12: {
             text: 'You are hungry. You see some red berries. Are you going to eat them?',

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { bookData } from '../data/test3.js';
 import { hasItem } from '../utils/gameUtils.js';
 
@@ -18,6 +18,9 @@ export const Game = () => {
         
         if (choice.addToInventory) {
             setInventory([...inventory, choice.addToInventory]);
+        }
+        if (choice.removeFromInventory) {
+            setInventory(inventory.filter(item => item !== choice.removeFromInventory));
         }
 
     };
