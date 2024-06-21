@@ -1,4 +1,4 @@
-const bookData = {
+export const bookData = {
     pages: {
       1: {
         text: `Нещо не е наред...
@@ -334,5 +334,3 @@ bookData.pages[2].moreText = "А ако имаш два или три от те�
 
 
 
-
-  export default bookData;

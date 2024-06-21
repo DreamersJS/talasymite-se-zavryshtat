@@ -28,6 +28,20 @@ export const Game = () => {
         return hasItem(inventory, choice.requiresItem);  
     });
 
+    if (pageData.end) {
+        return (
+            <div>
+                <p>{pageData.text}</p>
+                <button onClick={resetGame}>Play Again</button>
+            </div>
+        );
+    }
+
+    function resetGame() {
+        setCurrentPage(1);
+        setInventory([]);
+    }
+
     return (
         <div>
             <p>{pageData.text}</p>

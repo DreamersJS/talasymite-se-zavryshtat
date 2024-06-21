@@ -17,6 +17,7 @@ export const bookData = {
         3: {
             text: 'The bear catches you and eats you. You are dead.',
             choices: [],
+            end: true,
         },
         4: {
             text: 'The bear sniffs you and walks away. You are alive.',
@@ -27,7 +28,7 @@ export const bookData = {
         5: {
             text: 'You see a rusty sword. Do you take it?',
             choices: [
-                { text: 'Take', nextPage: 6, addToInventory: 'sword' }, // Example: addToInventory adds 'sword' to inventory
+                { text: 'Take', nextPage: 6, addToInventory: 'sword' }, 
                 { text: 'Leave it', nextPage: 7 },
             ],
         },
@@ -48,44 +49,47 @@ export const bookData = {
             choices: [
                 { text: 'Run', nextPage: 9 },
                 { text: 'Climb', nextPage: 10 },
-                { text: 'Attack', nextPage: 11, requiresItem: 'sword' }, // Example: requiresItem checks if 'sword' is in inventory
-            ].filter(choice => choice.nextPage !== null), // Filter out choices with null nextPage
+                { text: 'Attack', nextPage: 11, requiresItem: 'sword' },  
+            ].filter(choice => choice.nextPage !== null),  
         },
         9: {
             text: 'The wolf catches you and eats you. You are dead.',
             choices: [],
+            end: true,
         },
         10: {
             text: 'The wolf is waiting for you. You have two choices: wait for someone to help you or fight.',
             choices: [
                 { text: 'Wait for someone to pass by and help you', nextPage: 14 },
-                { text: 'Go down and fight', nextPage: 11, requiresItem: 'sword' }, // Example: requiresItem checks if 'sword' is in inventory
-            ].filter(choice => choice.nextPage !== null), // Filter out choices with null nextPage
+                { text: 'Go down and fight', nextPage: 11, requiresItem: 'sword' },  
+            ].filter(choice => choice.nextPage !== null), 
         },
         11: {
             text: 'You are fighting the wolf.',
             choices: [
-                { text: 'You survived', nextPage: 12 },
-                { text: 'You died', nextPage: 1 }, // Example: Player dies and restarts from page 1
+                { text: 'You survived', nextPage: 12 }, // to think of a battle system and auto-next page maybe????????
+                { text: 'You died', nextPage: 1 }, 
             ],
+            end: true,
         },
         12: {
             text: 'You are hungry. You see some red berries. Are you going to eat them?',
             choices: [
-                { text: 'Eat', nextPage: 12 }, // Example: Eating berries (health change)
+                { text: 'Eat', nextPage: 12 }, // Example: Eating berries (health--)
                 { text: 'Leave them', nextPage: 13 },
             ],
         },
         13: {
             text: 'You are starving. You see more berries, blue. Are you going to eat them?',
             choices: [
-                { text: 'Eat', nextPage: 15 }, // Example: Eating berries (health change)
-                { text: 'Leave them', nextPage: 15 }, // Example: Not eating berries (health change)
+                { text: 'Eat', nextPage: 15 }, // Example: Eating berries (health++)
+                { text: 'Leave them', nextPage: 15 }, // Example: Not eating berries (health--)
             ],
         },
         14: {
             text: 'It\'s night. The moon is rising, and wolves are swarming around you.',
             choices: [],
+            end: true,
         },
         15: {
             text: 'It\'s night. The moon is rising, stars are shining, the forest is calm. You are alive.',
