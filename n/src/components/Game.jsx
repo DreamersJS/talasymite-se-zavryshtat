@@ -23,11 +23,15 @@ export const Game = () => {
     };
 
     const pageData = bookData.pages[currentPage];
+    const filteredChoices = pageData.choices.filter(choice => {
+        if (!choice.requiresItem) return true; 
+        return hasItem(inventory, choice.requiresItem);  
+    });
 
     return (
         <div>
             <p>{pageData.text}</p>
-            {pageData.choices.map((choice, index) => (
+            {filteredChoices.map((choice, index) => (
                 <button key={index} onClick={() => handleChoice(choice.nextPage, choice)}>
                     {choice.text}
                 </button>
