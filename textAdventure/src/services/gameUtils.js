@@ -3,9 +3,9 @@
     return items.some(item => inventory.includes(item));
 }
 function diaryBag(){
-
+const bag = [];
 };
-function writeDiaryBagHolder(chosen){
+function writeDiaryBagHolder(chosen, adventureDiary){
   if (chosen === "Хухавел") {
     adventureDiary.bagCarrier = "Хухавел";
     
@@ -55,4 +55,4 @@ function ResetDiary(){
     text: "Според едно древно предсказание на Дървеняк му е предречено, че ще издъхне моментално, ако го поръси и капка вода.",
   };
 }
-export { hasItem, diaryBag, diaryBagHolder, diaryHealthCondition, diaryMushroomProperties, diarySecret, ResetDiary}
+export { hasItem, diaryBag, writeDiaryBagHolder, readDiaryBagHolder, diaryHealthCondition, diaryMushroomProperties, diarySecret, ResetDiary}

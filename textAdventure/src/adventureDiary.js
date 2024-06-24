@@ -1,4 +1,4 @@
-const adventureDiary = {
+export const adventureDiary = {
   bag: [],
   bagCarrier: "",
   healthCondition: {

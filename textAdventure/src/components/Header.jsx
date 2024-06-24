@@ -1,30 +1,29 @@
-import bag from '../../img/bag.png';
-import mushroomYellow from '../../img/mushroomYellow.png';
-import mushroomBlue from '../../img/mushroomBlue.png';
-import mushroomRed from '../../img/mushroomRed.png';
-import mushroomGreen from '../../img/mushroomGreen.png';
-import mushroomBlack from '../../img/mushroomBlack.png';
+import './Header.css'
+import bag from '../../img/bag.jpeg';
+import mushroomYellow from '../../img/mushroomYellow.jpg';
+import mushroomBlue from '../../img/mushroomBlue.jpg';
+import mushroomRed from '../../img/mushroomRed.jpg';
+import mushroomGreen from '../../img/mushroomGreen.jpg';
+import mushroomBlack from '../../img/mushroomBlack.jpg';
 import { adventureDiary } from '../adventureDiary';
 
 export const Header = () => {
-
+    // onClick for Inventory
     return (
         <header>
 
-            <h3>Inventory</h3>
             <div>
-                <img src={bag} alt="Inventory" />
+                <img src={bag} style={{ height: '40px' }} alt="Inventory" />
             </div>
+
             {adventureDiary.bagCarrier && (
                 <>
-                    <h3>BadHolder</h3>
                     <div>
-                        <p>Bag Holder: {adventureDiary.bagCarrier}</p>
+                        <p>Bag Holder: <br/>{adventureDiary.bagCarrier}</p>
                     </div>
                 </>
             )}
 
-            <h3>Mushrooms</h3>
             <div>
                 <img src={mushroomYellow} alt="Yellow Mushroom" style={{ display: adventureDiary.mushroomProperties.yellow.show ? 'block' : 'none' }} />
                 <img src={mushroomBlue} alt="Blue Mushroom" style={{ display: adventureDiary.mushroomProperties.blue.show ? 'block' : 'none' }} />
@@ -35,8 +34,10 @@ export const Header = () => {
 
             {adventureDiary.secret.show && (
                 <>
-                    <h3>Secret</h3>
-                    <div id="secretDiv">{adventureDiary.secret.text}</div>
+                    <div>
+                        <h3>Secret</h3>
+                        <div id="secretDiv">{adventureDiary.secret.text}</div>
+                    </div>
                 </>
             )}
 
