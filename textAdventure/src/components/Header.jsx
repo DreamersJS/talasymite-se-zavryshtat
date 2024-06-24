@@ -19,17 +19,57 @@ export const Header = () => {
             {adventureDiary.bagCarrier && (
                 <>
                     <div>
-                        <p>Bag Holder: <br/>{adventureDiary.bagCarrier}</p>
+                        <p>Bag Holder: <br />{adventureDiary.bagCarrier}</p>
                     </div>
                 </>
             )}
 
             <div>
-                <img src={mushroomYellow} alt="Yellow Mushroom" style={{ display: adventureDiary.mushroomProperties.yellow.show ? 'block' : 'none' }} />
-                <img src={mushroomBlue} alt="Blue Mushroom" style={{ display: adventureDiary.mushroomProperties.blue.show ? 'block' : 'none' }} />
-                <img src={mushroomRed} alt="Red Mushroom" style={{ display: adventureDiary.mushroomProperties.red.show ? 'block' : 'none' }} />
-                <img src={mushroomGreen} alt="Green Mushroom" style={{ display: adventureDiary.mushroomProperties.green.show ? 'block' : 'none' }} />
-                <img src={mushroomBlack} alt="Black Mushroom" style={{ display: adventureDiary.mushroomProperties.black.show ? 'block' : 'none' }} />
+                <div>
+                    {adventureDiary.mushroomProperties.yellow.show && (
+                        <>
+                            <img src={mushroomYellow} alt="Yellow Mushroom" style={{ height: '40px' }} />
+                            <p> {adventureDiary.mushroomProperties.yellow.show}</p>
+                        </>
+                    )
+                    }
+                </div>
+                <div>
+                    {adventureDiary.mushroomProperties.yellow.show && (
+                        <>
+                            <img src={mushroomBlue} alt="Blue Mushroom" style={{ height: '40px' }} />
+                            <p> {adventureDiary.mushroomProperties.blue.show}</p>
+                        </>
+                    )
+                    }
+                </div>
+                <div>
+                    {adventureDiary.mushroomProperties.red.show && (
+                        <>
+                            <img src={mushroomRed} alt="Red Mushroom" style={{ height: '40px' }} />
+                            <p> {adventureDiary.mushroomProperties.red.show}</p>
+                        </>
+                    )
+                    }
+                </div>
+                <div>
+                    {adventureDiary.mushroomProperties.green.show && (
+                        <>
+                            <img src={mushroomGreen} alt="Yellow Mushroom" style={{ height: '40px' }} />
+                            <p> {adventureDiary.mushroomProperties.green.show}</p>
+                        </>
+                    )
+                    }
+                </div>
+                <div>
+                    {adventureDiary.mushroomProperties.black.show && (
+                        <>
+                            <img src={mushroomBlack} alt="Black Mushroom" style={{ height: '40px' }} />
+                            <p> {adventureDiary.mushroomProperties.black.show}</p>
+                        </>
+                    )
+                    }
+                </div>
             </div>
 
             {adventureDiary.secret.show && (
