@@ -68,7 +68,7 @@ export const bookData = {
             text: 'You are fighting the wolf.',
             choices: [
                 { text: 'You survived', nextPage: 12 }, // to think of a battle system and auto-next page maybe????????
-                { text: 'You died', nextPage: 1 }, // auto lose and reset button?????? // end: true, 
+                { text: 'You died', nextPage: 9 }, // auto lose and reset button?????? // end: true, 
             ],
         },
         12: {
@@ -82,7 +82,7 @@ export const bookData = {
             text: 'You are starving. You see more berries, blue. Are you going to eat them?',
             choices: [
                 { text: 'Eat', nextPage: 15 }, // Example: Eating berries (health++)
-                { text: 'Leave them', nextPage: 15 }, // Example: Not eating berries (health--)
+                { text: 'Leave them', healthConditionChange: { injuredWithFork: true, healthy: false }, nextPage: 15 }, // Example: Not eating berries (health--)
             ],
         },
         14: {

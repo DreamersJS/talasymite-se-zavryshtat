@@ -8,7 +8,8 @@ import mushroomBlack from '../../img/mushroomBlack.jpg';
 import { adventureDiary } from '../adventureDiary';
 
 export const Header = () => {
-    // onClick for Inventory
+    // onClick for Inventory-> modal pop up with some ugly pics of items, on hover names of items? // Sacred or Dragon Age: Origins?
+    // relation tables for items, which pic answers to which item?
     return (
         <header>
 

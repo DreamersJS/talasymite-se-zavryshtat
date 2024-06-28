@@ -1,41 +1,34 @@
-
-  function hasItem(inventory, ...items) {
-    return items.some(item => inventory.includes(item));
+function hasItem(inventory, ...items) {
+  return items.some((item) => inventory.includes(item));
 }
-function diaryBag(){
-const bag = [];
-};
-function writeDiaryBagHolder(chosen, adventureDiary){
-  if (chosen === "Хухавел") {
-    adventureDiary.bagCarrier = "Хухавел";
-    
-  }else if (chosen === "Бабаитко") {
-    adventureDiary.bagCarrier = "Бабаитко";
-
-  }else if (chosen === "Гадолини") {
-    adventureDiary.bagCarrier = "Гадолини";
-
-  }else if (chosen === "Фърчилан") {
-    adventureDiary.bagCarrier = "Фърчилан";
-
-  }else if (chosen === "самият ти") {
-    adventureDiary.bagCarrier = "самият ти";
-
+function writeDiaryBag(inventory, adventureDiary) {
+  adventureDiary.bag = [...inventory];
+}
+function writeDiaryBagHolder(chosen, adventureDiary) {
+  const validCarriers = ["Хухавел", "Бабаитко", "Гадолини", "Фърчилан", "самият ти",];
+  if (validCarriers.includes(chosen)) {
+    adventureDiary.bagCarrier = chosen;
   }
 }
-function readDiaryBagHolder(){
-  
+function readDiaryBagHolder(adventureDiary) {
+  return adventureDiary.bagCarrier;
 }
-function diaryHealthCondition(){
-  
+function getDiaryHealthCondition(adventureDiary) {
+  return adventureDiary.healthCondition;
 }
-function diaryMushroomProperties(){
-  
+function changeDiaryHealthCondition(adventureDiary, newCondition) {
+  adventureDiary.healthCondition = {
+    ...adventureDiary.healthCondition,
+    ...newCondition,
+  };
 }
-function diarySecret(){
-  
+function diaryMushroomProperties() {}
+function diarySecret(adventureDiary) {
+  return adventureDiary.secret.show
+    ? adventureDiary.secret.text
+    : "The secret is hidden.";
 }
-function ResetDiary(){
+function ResetDiary(adventureDiary) {
   adventureDiary.bag = [];
   adventureDiary.bagCarrier = "";
   adventureDiary.healthCondition = {
@@ -44,15 +37,30 @@ function ResetDiary(){
     injuredWithFork: false,
   };
   adventureDiary.mushroomProperties = {
-    yellow: 'увеличава онзи, който хапне от нея.', show: false,
-    blue: 'смалява многократно консуматора си.', show: false,
-    red: 'силно намалява теглото.', show: false,
-    green: 'увеличава теглото.', show: false,
-    black: 'невероятно отровна, убива жертвата за броени минути.', show: false,
+    yellow: { description: "увеличава онзи, който хапне от нея.", show: false },
+    blue: { description: "смалява многократно консуматора си.", show: false },
+    red: { description: "силно намалява теглото.", show: false },
+    green: { description: "увеличава теглото.", show: false },
+    black: {
+      description: "невероятно отровна, убива жертвата за броени минути.",
+      show: false,
+    },
   };
   adventureDiary.secret = {
     show: false,
     text: "Според едно древно предсказание на Дървеняк му е предречено, че ще издъхне моментално, ако го поръси и капка вода.",
   };
+  adventureDiary.visitedPages = [];
 }
-export { hasItem, diaryBag, writeDiaryBagHolder, readDiaryBagHolder, diaryHealthCondition, diaryMushroomProperties, diarySecret, ResetDiary}
+
+export {
+  hasItem,
+  writeDiaryBag,
+  writeDiaryBagHolder,
+  readDiaryBagHolder,
+  getDiaryHealthCondition,
+  changeDiaryHealthCondition,
+  diaryMushroomProperties,
+  diarySecret,
+  ResetDiary,
+};
