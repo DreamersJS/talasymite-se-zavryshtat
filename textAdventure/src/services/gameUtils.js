@@ -1,9 +1,28 @@
-function hasItem(inventory, ...items) {
-  return items.some((item) => inventory.includes(item));
+function hasItem(adventureDiary, ...items) {
+  const inventory = Object.keys(adventureDiary.bag);
+  return items.some(item => inventory.includes(item));
 }
-function writeDiaryBag(inventory, adventureDiary) {
-  adventureDiary.bag = [...inventory];
+function addItem(adventureDiary, ...items) {
+  items.forEach(item => {
+    if (!adventureDiary.bag[item]) {
+      adventureDiary.bag[item] = { quantity: 1 };
+    } else {
+      adventureDiary.bag[item].quantity += 1;
+    }
+  });
 }
+function removeItem(adventureDiary, quantityToRemove, ...items) {
+  items.forEach(item => {
+    if (adventureDiary.bag[item]) {
+      if (adventureDiary.bag[item].quantity > 1) {
+        adventureDiary.bag[item].quantity -= quantityToRemove;
+      } else {
+        delete adventureDiary.bag[item];
+      }
+    }
+  });
+}
+
 function writeDiaryBagHolder(chosen, adventureDiary) {
   const validCarriers = ["Хухавел", "Бабаитко", "Гадолини", "Фърчилан", "самият ти",];
   if (validCarriers.includes(chosen)) {
@@ -56,7 +75,8 @@ function ResetDiary(adventureDiary) {
 
 export {
   hasItem,
-  writeDiaryBag,
+  addItem,
+  removeItem,
   writeDiaryBagHolder,
   readDiaryBagHolder,
   getDiaryCondition,

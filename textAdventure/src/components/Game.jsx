@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { bookData } from '../data/test3.js';
-import { hasItem } from '../services/gameUtils.js';
+// import { bookData } from '../data/test4.js';
+import { hasItem, addItem, removeItem } from '../services/gameUtils.js';
 
 export const Game = () => {
     const [currentPage, setCurrentPage] = useState(1);
