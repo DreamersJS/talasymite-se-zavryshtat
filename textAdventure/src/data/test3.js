@@ -82,7 +82,7 @@ export const bookData = {
             text: 'You are starving. You see more berries, blue. Are you going to eat them?',
             choices: [
                 { text: 'Eat', nextPage: 15 }, // Example: Eating berries (health++)
-                { text: 'Leave them', healthConditionChange: { injuredWithFork: true, healthy: false }, nextPage: 15 }, // Example: Not eating berries (health--)
+                { text: 'Leave them', nextPage: 15 }, // Example: Not eating berries (health--)
             ],
         },
         14: {

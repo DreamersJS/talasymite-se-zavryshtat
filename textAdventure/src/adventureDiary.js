@@ -1,10 +1,11 @@
 export const adventureDiary = {
   bag: [],
   bagCarrier: "",
-  healthCondition: {
+  condition: {
     healthy: true,
     sick: false,
     injuredWithFork: false,
+    jailed: false,
   },
   mushroomProperties: {
     yellow: { description: "увеличава онзи, който хапне от нея.", show: false },

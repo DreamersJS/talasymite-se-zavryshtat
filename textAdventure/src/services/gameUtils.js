@@ -13,12 +13,12 @@ function writeDiaryBagHolder(chosen, adventureDiary) {
 function readDiaryBagHolder(adventureDiary) {
   return adventureDiary.bagCarrier;
 }
-function getDiaryHealthCondition(adventureDiary) {
-  return adventureDiary.healthCondition;
+function getDiaryCondition(adventureDiary) {
+  return adventureDiary.condition;
 }
-function changeDiaryHealthCondition(adventureDiary, newCondition) {
-  adventureDiary.healthCondition = {
-    ...adventureDiary.healthCondition,
+function changeDiaryCondition(adventureDiary, newCondition) {
+  adventureDiary.condition = {
+    ...adventureDiary.condition,
     ...newCondition,
   };
 }
@@ -31,10 +31,11 @@ function diarySecret(adventureDiary) {
 function ResetDiary(adventureDiary) {
   adventureDiary.bag = [];
   adventureDiary.bagCarrier = "";
-  adventureDiary.healthCondition = {
+  adventureDiary.condition = {
     healthy: true,
     sick: false,
     injuredWithFork: false,
+    jailed: false,
   };
   adventureDiary.mushroomProperties = {
     yellow: { description: "увеличава онзи, който хапне от нея.", show: false },
@@ -58,8 +59,8 @@ export {
   writeDiaryBag,
   writeDiaryBagHolder,
   readDiaryBagHolder,
-  getDiaryHealthCondition,
-  changeDiaryHealthCondition,
+  getDiaryCondition,
+  changeDiaryCondition,
   diaryMushroomProperties,
   diarySecret,
   ResetDiary,
