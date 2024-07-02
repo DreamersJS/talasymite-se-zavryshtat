@@ -12,6 +12,7 @@ export const bookData = {
       choices: [
         {
           text: "Почесваш се озадачено по тила, после излизаш от колибата и попадаш на 85. ",
+          addToInventory: [{ item: "bag", quantity: 1 }, {item: "corn", quantity: 3 }, { item: "watermelon", quantity: 1 }, {item: "tomato", quantity: 2 }, { item: "beetroot", quantity: 1 }, {item: "pipe", quantity: 1 }, {item: "soap", quantity: 1 }],
           nextPage: 85,
         },
       ],
@@ -407,7 +408,7 @@ export const bookData = {
       choices: [
         {
           text: "Напълваш съдинката си с вода и преминаваш на 177. ",
-          // addItemToInventory: каква съдинка от диня, от кратуна, шише?
+          // addToInventory: каква съдинка от диня, от кратуна, шише?
           nextPage: 177,
         },
       ],
@@ -860,7 +861,7 @@ export const bookData = {
           Отбележи си, че вече нямаш разтворител. Ако искаш, можеш да запазиш празното шишенце. След това премини на 128. 
           `,
           removeFromInventory: { item: "bottleOfSolvent", quantity: 1 },
-          addItemToInventory: [{ item: "bottleEmpty", quantity: 1 }],
+          addToInventory: [{ item: "bottleEmpty", quantity: 1 }],
           nextPage: 128,
         }
       ].filter((choice) => choice.nextPage !== null),

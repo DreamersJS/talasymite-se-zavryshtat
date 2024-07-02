@@ -2,8 +2,8 @@ function hasItem(adventureDiary, ...items) {
   const inventory = Object.keys(adventureDiary.bag);
   return items.some(item => inventory.includes(item));
 }
-function addItem(adventureDiary, addItemToInventory) {
-  addItemToInventory.forEach(itemData => {
+function addItem(adventureDiary, addToInventory) {
+  addToInventory.forEach(itemData => {
     const { item, quantity } = itemData;
     if (!adventureDiary.bag[item]) {
       adventureDiary.bag[item] = { quantity };
@@ -39,8 +39,11 @@ function writeDiaryBagHolder(chosen, adventureDiary) {
 function readDiaryBagHolder(adventureDiary) {
   return adventureDiary.bagCarrier;
 }
-function getDiaryCondition(adventureDiary) {
-  return adventureDiary.condition;
+function getDiaryCondition(adventureDiary, con) {
+  if (adventureDiary.condition[con] === true) {
+    return true;
+  }
+  return false;
 }
 function changeDiaryCondition(adventureDiary, newCondition) {
   adventureDiary.condition = {

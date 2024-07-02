@@ -13,7 +13,7 @@ export const bookData = {
           {
             text: "Почесваш се озадачено по тила, после излизаш от колибата и попадаш на 85. ",
             nextPage: 5,
-            addItemToInventory: [{ item: "bag", quantity: 1 }, {item: "corn", quantity: 3 }, { item: "watermelon", quantity: 1 }, {item: "tomato", quantity: 2 }, { item: "beetroot", quantity: 1 }, {item: "pipe", quantity: 1 }, {item: "soap", quantity: 1 }],
+            addToInventory: [{ item: "bag", quantity: 1 }, {item: "corn", quantity: 3 }, { item: "watermelon", quantity: 1 }, {item: "tomato", quantity: 2 }, { item: "beetroot", quantity: 1 }, {item: "pipe", quantity: 1 }, {item: "soap", quantity: 1 }],
           },
         ],
       },
@@ -53,7 +53,7 @@ export const bookData = {
             { text: "Фърчилан — прехвърли се на 17. ", nextPage: 4, requresBagCarrier: "Фърчилан"},
             { text: "Гадолини — прехвърли се на 13. ", nextPage: 13, requresBagCarrier: "Гадолини"},
             { text: "Самият ти — прехвърли се на 18. ", nextPage: 8, requresBagCarrier: "самият ти"},
-        ],
+        ].filter((choice) => choice.nextPage !== null),
         },
       4: {
         text: `— Бях огнедишащ, обаче вече не съм — въздъхва змеят. — Остарях, изнемощях… На, гледай!
@@ -249,7 +249,7 @@ export const bookData = {
         choices: [
           {
             text: "Напълваш съдинката си с вода и преминаваш на 177. ",
-            addItemToInventory: [{ item: "water", quantity: 1 }],
+            addToInventory: [{ item: "water", quantity: 1 }],
             nextPage: 177,
           },
         ],
@@ -261,31 +261,31 @@ export const bookData = {
 
 
 
-  40: {
-    text: `
-    Спирате за кратка почивка на мястото, където се сливат левият и средният път. Накъде ще продължиш сега? 
-     `,
-    choices: [
-      {
-        text: `
-        Напред, където би трябвало да е замъкът на таласъмите — мини на 157. 
-        `,
-        nextPage: 157,
-      },
-      {
-        text: `
-        Обратно по средния път — продължи на 141. 
-        `,
-        nextPage: 141,
-      },
-    ].filter((choice) => choice.nextPage !== null),
-  },
+//   40: {
+//     text: `
+//     Спирате за кратка почивка на мястото, където се сливат левият и средният път. Накъде ще продължиш сега? 
+//      `,
+//     choices: [
+//       {
+//         text: `
+//         Напред, където би трябвало да е замъкът на таласъмите — мини на 157. 
+//         `,
+//         nextPage: 157,
+//       },
+//       {
+//         text: `
+//         Обратно по средния път — продължи на 141. 
+//         `,
+//         nextPage: 141,
+//       },
+//     ].filter((choice) => choice.nextPage !== null),
+//   },
 
 
-requiresItem: { item: "corn", quantity: 1 },
-addItemToInventory: [{ item: "water", quantity: 1 }],
-removeFromInventory: { item: "corn", quantity: 1 },
- changeCondition: { condition: "injuredWithFork" },
- requiresCondition: { condition: "healthy" },
+// requiresItem: { item: "corn", quantity: 1 },
+// addToInventory: [{ item: "water", quantity: 1 }],
+// removeFromInventory: { item: "corn", quantity: 1 },
+//  changeCondition: { condition: "injuredWithFork" },
+//  requiresCondition: { condition: "healthy" },
 
- inventoryLeftovers: [{ item: "duck", quantity: 1 }, { item: "pipe", quantity: 1 }],
+//  inventoryLeftovers: [{ item: "duck", quantity: 1 }, { item: "pipe", quantity: 1 }],

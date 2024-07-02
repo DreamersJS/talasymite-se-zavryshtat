@@ -1,11 +1,31 @@
 import React, { useState } from 'react';
-import { bookData } from '../data/test3.js';
-// import { bookData } from '../data/test4.js';
-import { hasItem, addItem, removeItem } from '../services/gameUtils.js';
+// import { bookData } from '../data/test3.js';
+import { bookData } from '../data/test4.js';
+import { hasItem,
+    addItem,
+    removeItem,
+    emptyInventory,
+    writeDiaryBagHolder,
+    readDiaryBagHolder,
+    getDiaryCondition,
+    changeDiaryCondition,
+    diaryMushroomProperties,
+    diarySecret,
+    ResetDiary, } from '../services/gameUtils.js';
 
 export const Game = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [inventory, setInventory] = useState([]);
+    const [diary, setDiary] = useState({
+        bagCarrier: "",
+        condition: {},
+        secret: {
+            show: false,
+            text: "This is a secret.",
+        },
+    });
+    const pageData = bookData.pages[currentPage];
+    
 
     const handleChoice = (nextPage, choice) => {
         
@@ -24,9 +44,21 @@ export const Game = () => {
             setInventory(inventory.filter(item => item !== choice.removeFromInventory));
         }
 
+        if (choice.requiresCondition) {
+            getDiaryCondition(diary.condition, choice.condition);
+        }
+        if (choice.changeCondition) {
+            changeDiaryCondition(diary.condition, choice.condition);
+        }
+        // requresBagCarrier
+        if (choice.bagCarrier) {
+            writeDiaryBagHolder(diary.bagCarrier, choice.bagCarrier);
+        }
+        if (choice.requresBagCarrier) {
+            readDiaryBagHolder(diary.bagCarrier);
+        }
     };
 
-    const pageData = bookData.pages[currentPage];
     const filteredChoices = pageData.choices.filter(choice => {
         if (!choice.requiresItem) return true; 
         return hasItem(inventory, choice.requiresItem);  
