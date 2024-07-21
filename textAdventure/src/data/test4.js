@@ -42,7 +42,7 @@ export const bookData = {
             text: "Ако нямаш нищо от изброеното, попадаш на 203. ",
             nextPage: 4,
           },
-        ].filter((choice) => choice.nextPage !== null),
+        ],
         moreText:
           "А ако имаш два или три от тези предмети, избери с кой си готов да се разделиш и премини на съответния епизод.",
       },
@@ -51,10 +51,10 @@ export const bookData = {
         choices: [
             { text: "Хухавел — прехвърли се на 15. ", nextPage: 15, requiresBagCarrier: "Хухавел"},
             { text: "Бабаитко — прехвърли се на 16. ", nextPage: 2, requiresBagCarrier: "Бабаитко"},
-            { text: "Фърчилан — прехвърли се на 17. ", nextPage: 4, requiresBagCarrier: "Фърчилан"},
+            { text: "Фърчилан — прехвърли се на 77. ", nextPage: 7, requiresBagCarrier: "Фърчилан"},
             { text: "Гадолини — прехвърли се на 13. ", nextPage: 13, requiresBagCarrier: "Гадолини"},
             { text: "Самият ти — прехвърли се на 18. ", nextPage: 8, requiresBagCarrier: "самият ти"},
-        ].filter((choice) => choice.nextPage !== null),
+        ],
         },
       4: {
         text: `— Бях огнедишащ, обаче вече не съм — въздъхва змеят. — Остарях, изнемощях… На, гледай!
@@ -72,7 +72,7 @@ export const bookData = {
             nextPage: 7,
           },
           { text: "В противен случай продължи на 15. ", nextPage: 15 },
-        ].filter((choice) => choice.nextPage !== null),
+        ],
       },
       5: {
         text: `— Кой ще носи торбата?`,
@@ -98,14 +98,14 @@ export const bookData = {
             nextPage: 21,
             requiresCondition: { condition: "healthy" },
           },
-        ].filter((choice) => choice.nextPage !== null),
+        ],
       },
       7: {
         text: `Минавал ли си вече по този път?`,
         choices: [
-          { text: "Да — продължи на 33. ", nextPage: 33, visitedPages: 8 },
+          { text: "Да — продължи на 4. ", nextPage: 4, visitedPages: 8 },
           { text: "Не — прехвърли се на 8. ", nextPage: 8 },
-        ].filter((choice) => choice.nextPage !== null),
+        ],
       },
       8: {
         text: `Изненеада! `,
@@ -119,7 +119,7 @@ export const bookData = {
             text: "Неуспешна атака от таласъм, мини на 6. ",
             nextPage: 6,
           },
-        ].filter((choice) => choice.nextPage !== null),
+        ],
       },
       10: {
         text: `О, любезний читателю! С това свое решение ти показа, че наистина в гърдите ти бие сърце на чукундурт. Не ще и дума, очаква те трудна, но славна съдба. Тепърва ще бъдеш оплюван всекидневно от целокупния чукундуртски народ. Ако издържиш на изпитанията достатъчно дълго, подир време току-виж си станал министър на простите работи. Но така или иначе това вече е съвсем друга история. Твоето приключение привършва дотук.`,
@@ -145,7 +145,7 @@ export const bookData = {
             text: "А ако нямаш нито едното, нито другото, прехвърли се на 87. ",
             nextPage: 1,
           },
-        ].filter((choice) => choice.nextPage !== null),
+        ],
       },
   
   
@@ -173,7 +173,7 @@ export const bookData = {
             requiresItem: { item: "corn", quantity: 3 },
             removeFromInventory: { item: "corn", quantity: 3 },
           },
-        ].filter((choice) => choice.nextPage !== null),
+        ],
       },
   
   

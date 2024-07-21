@@ -14,6 +14,8 @@ import {
     diaryMushroomProperties,
     diarySecret,
     ResetDiary,
+    visitedPagesPush,
+    visitedPagesCheck,
 } from '../services/gameUtils.js';
 import { adventureDiary } from '../adventureDiary.js';
 
@@ -21,26 +23,28 @@ export const Game = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const pageData = bookData.pages[currentPage];
 
-    // console.log('adventureDiary.bag:', adventureDiary.bag);
-    console.log('condition:', adventureDiary.condition);
-
+    //  console.log('adventureDiary.bag:', adventureDiary.bag);
+    // console.log('condition:', adventureDiary.condition);
+    console.log('visitedPages:', adventureDiary.visitedPages);
 
     const handleChoice = (nextPage, choice) => {
         if (choice.requiresItem && !hasItem(adventureDiary.bag, choice.requiresItem)) {
-            console.log(`You need a ${choice.requiresItem.item} to choose this option.`);
             return;
         }
 
         if (choice.requiresCondition && !getDiaryCondition(adventureDiary.condition, choice.requiresCondition.condition)) {
-            console.log(`Condition ${choice.requiresCondition.condition} not met to choose this option.`);
             return;
         }
 
         if (choice.requiresBagCarrier && readDiaryBagHolder(adventureDiary) !== choice.requiresBagCarrier) {
-            console.log(`Bag carrier must be ${choice.requiresBagCarrier} to choose this option.`);
             return;
         }
 
+        if (choice.visitedPages && !visitedPagesCheck(adventureDiary, choice.visitedPages)) {
+            return;
+        }
+
+        visitedPagesPush(adventureDiary, currentPage);
         setCurrentPage(nextPage);
 
         if (choice.addToInventory) {
@@ -50,7 +54,7 @@ export const Game = () => {
         }
 
         if (choice.removeFromInventory) {
-                removeItem(adventureDiary, choice.removeFromInventory);
+            removeItem(adventureDiary, choice.removeFromInventory);
         }
 
         if (choice.bagCarrier) {
@@ -67,6 +71,7 @@ export const Game = () => {
         } else {
             setCurrentPage(choice.nextPage);
         }
+
     };
 
     const rollDice = (pages) => {
@@ -77,8 +82,10 @@ export const Game = () => {
     const filteredChoices = pageData.choices.filter(choice => {
         const meetsItemRequirement = !choice.requiresItem || hasItem(adventureDiary.bag, choice.requiresItem);
         const meetsConditionRequirement = !choice.requiresCondition || getDiaryCondition(adventureDiary.condition, choice.requiresCondition.condition);
+        const leadsToUnvisitedPage = !Array.isArray(choice.nextPage) || choice.nextPage.some(page => !visitedPagesCheck(adventureDiary, page));
         const meetsBagCarrierRequirement = !choice.requiresBagCarrier || readDiaryBagHolder(adventureDiary) === choice.requiresBagCarrier;
-        return meetsItemRequirement && meetsConditionRequirement && meetsBagCarrierRequirement;
+        const meetsVisitedPagesRequirement = !choice.visitedPages || visitedPagesCheck(adventureDiary, choice.visitedPages);
+        return meetsItemRequirement && meetsConditionRequirement && meetsBagCarrierRequirement && leadsToUnvisitedPage && meetsVisitedPagesRequirement;
     });
 
     if (pageData.end) {

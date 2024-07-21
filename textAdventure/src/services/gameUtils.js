@@ -1,7 +1,6 @@
 function hasItem(bag, requiresItem) {
   return bag[requiresItem.item] >= requiresItem.quantity;
 }
-
 function addItem(adventureDiary, item, quantity) {
   if (adventureDiary.bag.hasOwnProperty(item)) {
       adventureDiary.bag[item] += quantity;
@@ -9,7 +8,6 @@ function addItem(adventureDiary, item, quantity) {
       adventureDiary.bag[item] = quantity;
   }
 }
-
 function removeItem(adventureDiary, removeFromInventory) {
   const { item, quantity } = removeFromInventory;
   if (adventureDiary.bag.hasOwnProperty(item)) {
@@ -20,27 +18,22 @@ function removeItem(adventureDiary, removeFromInventory) {
       }
   }
 }
-
 function emptyInventory(adventureDiary) {
   adventureDiary.bag = {};
   return adventureDiary.bag;
 }
-
 function writeDiaryBagHolder(adventureDiary, chosen) {
   const validCarriers = ["Хухавел", "Бабаитко", "Гадолини", "Фърчилан", "самият ти"];
   if (validCarriers.includes(chosen)) {
       adventureDiary.bagCarrier = chosen;
   }
 }
-
 function readDiaryBagHolder(adventureDiary) {
   return adventureDiary.bagCarrier;
 }
-
 function getDiaryCondition(condition, requiredCondition) {
   return condition[requiredCondition];
 }
-
 function changeDiaryCondition(adventureDiary, newCondition) {
   adventureDiary.condition = {
       ...adventureDiary.condition,
@@ -78,10 +71,7 @@ function ResetDiary(adventureDiary) {
       blue: { description: "смалява многократно консуматора си.", show: false },
       red: { description: "силно намалява теглото.", show: false },
       green: { description: "увеличава теглото.", show: false },
-      black: {
-          description: "невероятно отровна, убива жертвата за броени минути.",
-          show: false,
-      },
+      black: { description: "невероятно отровна, убива жертвата за броени минути.", show: false,},
   };
   adventureDiary.secret = {
       show: false,
@@ -90,6 +80,14 @@ function ResetDiary(adventureDiary) {
   adventureDiary.visitedPages = [];
 }
 
+function visitedPagesPush(adventureDiary, currentPage) {
+  if (!adventureDiary.visitedPages.includes(currentPage)) {
+    adventureDiary.visitedPages.push(currentPage);
+  }
+}
+function visitedPagesCheck(adventureDiary, pageToCheck) {
+  return adventureDiary.visitedPages.includes(pageToCheck);
+}
 export {
   hasItem,
   addItem,
@@ -103,4 +101,6 @@ export {
   diaryMushroomProperties,
   diarySecret,
   ResetDiary,
+  visitedPagesPush,
+  visitedPagesCheck,
 };
