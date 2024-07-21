@@ -24,55 +24,50 @@ export const Game = () => {
     console.log('bagCarrier:', adventureDiary.bagCarrier);
 
 
-
     const handleChoice = (nextPage, choice) => {
-
         if (choice.requiresItem && !hasItem(adventureDiary.bag, choice.requiresItem)) {
-            return false;
+            console.log(`You need a ${choice.requiresItem.item} to choose this option.`);
+            return;
+        }
+
+        if (choice.requiresCondition && !getDiaryCondition(adventureDiary.condition, choice.requiresCondition.condition)) {
+            console.log(`Condition ${choice.requiresCondition.condition} not met to choose this option.`);
+            return;
+        }
+
+        if (choice.requiresBagCarrier && readDiaryBagHolder(adventureDiary) !== choice.requiresBagCarrier) {
+            console.log(`Bag carrier must be ${choice.requiresBagCarrier} to choose this option.`);
+            return;
         }
 
         setCurrentPage(nextPage);
 
         if (choice.addToInventory) {
-            choice.addToInventory.map(obj => {
+            choice.addToInventory.forEach(obj => {
                 addItem(adventureDiary, obj.item, obj.quantity);
-            })
+            });
         }
-        //
-        // if (choice.requiresItem) {
-        //     const { item, quantity } = choice.requiresItem;
-        //     if (!hasItem(adventureDiary.bag, item) || adventureDiary.bag[item] < quantity) {
-        //         return false;
-        //     }
-        // }
+
         if (choice.removeFromInventory) {
-            choice.removeFromInventory.map(obj => {
-                removeItem(adventureDiary, [obj]);
-            })
-            return adventureDiary.bag;
+            choice.removeFromInventory.forEach(obj => {
+                removeItem(adventureDiary, obj);
+            });
         }
 
         if (choice.bagCarrier) {
             writeDiaryBagHolder(adventureDiary, choice.bagCarrier);
         }
-        if (choice.requiresBagCarrier && readDiaryBagHolder(adventureDiary) !== choice.requiresBagCarrier) {
-            return false;
+
+        if (choice.changeCondition) {
+            changeDiaryCondition(adventureDiary, choice.changeCondition);
         }
-        // if (choice.requiresBagCarrier) {
-        //     readDiaryBagHolder(adventureDiary);
-        //     if (choice.text === readDiaryBagHolder(adventureDiary)) {
-        //         return readDiaryBagHolder(adventureDiary);
-        //     } else {
-        //         return false;
-        //     }
-        // }
     };
 
     const filteredChoices = pageData.choices.filter(choice => {
-         const meetsItemRequirement = !choice.requiresItem || hasItem(adventureDiary.bag, choice.requiresItem);
-        // const meetsConditionRequirement = !choice.requiresCondition || getDiaryCondition(adventureDiary.condition, choice.requiresCondition);
-         const meetsBagCarrierRequirement = !choice.requiresBagCarrier || readDiaryBagHolder(adventureDiary, choice.requiresBagCarrier);
-        return meetsItemRequirement || meetsBagCarrierRequirement;
+        const meetsItemRequirement = !choice.requiresItem || hasItem(adventureDiary.bag, choice.requiresItem);
+        const meetsConditionRequirement = !choice.requiresCondition || getDiaryCondition(adventureDiary.condition, choice.requiresCondition.condition);
+        const meetsBagCarrierRequirement = !choice.requiresBagCarrier || readDiaryBagHolder(adventureDiary) === choice.requiresBagCarrier;
+        return meetsItemRequirement && meetsConditionRequirement && meetsBagCarrierRequirement;
     });
 
     if (pageData.end) {
@@ -86,7 +81,7 @@ export const Game = () => {
 
     function resetGame() {
         setCurrentPage(1);
-        ResetDiary();
+        ResetDiary(adventureDiary);
     }
 
     return (
