@@ -1,18 +1,11 @@
+
 function hasItem(adventureDiary, ...items) {
-  if (!adventureDiary || typeof adventureDiary.bag !== 'object') {
-    return false;
-  }
-  const inventory = Object.keys(adventureDiary.bag);
-  return items.map(item => inventory.includes(item));
+  return items.every(({ item, quantity }) => {
+    return adventureDiary.bag[item] >= quantity;
+  });
 }
 
 function addItem(adventureDiary, item, quantity) {
-  if (!adventureDiary || typeof adventureDiary.bag !== 'object') {
-    throw new Error('Invalid adventure diary or bag.');
-  }
-  if (typeof quantity !== 'number' || quantity <= 0) {
-    throw new Error('Quantity must be a positive number.');
-  }
   if (adventureDiary.bag.hasOwnProperty(item)) {
     adventureDiary.bag[item] += quantity;
   } else {
@@ -38,7 +31,7 @@ function emptyInventory(adventureDiary, inventoryLeftovers) {
   }
   return adventureDiary.bag;
 }
-function writeDiaryBagHolder(chosen, adventureDiary) {
+function writeDiaryBagHolder(adventureDiary, chosen) {
   const validCarriers = ["Хухавел", "Бабаитко", "Гадолини", "Фърчилан", "самият ти",];
   if (validCarriers.includes(chosen)) {
     adventureDiary.bagCarrier = chosen;

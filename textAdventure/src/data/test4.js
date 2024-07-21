@@ -48,11 +48,11 @@ export const bookData = {
       3: {
         text: `— Кой носи торбата?`,
         choices: [
-            { text: "Хухавел — прехвърли се на 15. ", nextPage: 15, requresBagCarrier: "Хухавел"},
-            { text: "Бабаитко — прехвърли се на 16. ", nextPage: 2, requresBagCarrier: "Бабаитко"},
-            { text: "Фърчилан — прехвърли се на 17. ", nextPage: 4, requresBagCarrier: "Фърчилан"},
-            { text: "Гадолини — прехвърли се на 13. ", nextPage: 13, requresBagCarrier: "Гадолини"},
-            { text: "Самият ти — прехвърли се на 18. ", nextPage: 8, requresBagCarrier: "самият ти"},
+            { text: "Хухавел — прехвърли се на 15. ", nextPage: 15, requiresBagCarrier: "Хухавел"},
+            { text: "Бабаитко — прехвърли се на 16. ", nextPage: 2, requiresBagCarrier: "Бабаитко"},
+            { text: "Фърчилан — прехвърли се на 17. ", nextPage: 4, requiresBagCarrier: "Фърчилан"},
+            { text: "Гадолини — прехвърли се на 13. ", nextPage: 13, requiresBagCarrier: "Гадолини"},
+            { text: "Самият ти — прехвърли се на 18. ", nextPage: 8, requiresBagCarrier: "самият ти"},
         ].filter((choice) => choice.nextPage !== null),
         },
       4: {

@@ -16,15 +16,7 @@ import { adventureDiary } from '../adventureDiary.js';
 
 export const Game = () => {
     const [currentPage, setCurrentPage] = useState(1);
-    // const [diary, setDiary] = useState({
-    //     bag: {},
-    //     bagCarrier: "",
-    //     condition: {},
-    //     secret: {
-    //         show: false,
-    //         text: "This is a secret.",
-    //     },
-    // });
+  
     const pageData = bookData.pages[currentPage];
     
     console.log('adventureDiary.bag:', adventureDiary.bag);
@@ -40,43 +32,62 @@ export const Game = () => {
         }
 
         setCurrentPage(nextPage);
-
         
         if (choice.addToInventory) {
 
              choice.addToInventory.map(obj => {
              addItem(adventureDiary, obj.item, obj.quantity);
              })
-
-                // setDiary(prevDiary => {
-                //     const newBag = { ...adventureDiary.bag };
-                //     return { ...prevDiary, bag: newBag };
-                // });
-            
-
         }
         if (choice.removeFromInventory) {
             setInventory(inventory.filter(item => item !== choice.removeFromInventory));
         }
 
         if (choice.requiresCondition) {
-            getDiaryCondition(diary.condition, choice.condition);
+            getDiaryCondition(adventureDiary.condition, choice.condition);
         }
         if (choice.changeCondition) {
             changeDiaryCondition(diary.condition, choice.condition);
         }
-        // requresBagCarrier
+        // requiresBagCarrier
         if (choice.bagCarrier) {
-            writeDiaryBagHolder(diary.bagCarrier, choice.bagCarrier);
+            writeDiaryBagHolder(adventureDiary, choice.bagCarrier);
         }
-        if (choice.requresBagCarrier) {
-            readDiaryBagHolder(diary.bagCarrier);
+        if (choice.requiresBagCarrier) {
+            readDiaryBagHolder(adventureDiary);
+            if (readDiaryBagHolder(adventureDiary)) {
+                return readDiaryBagHolder(adventureDiary);
+            }else {
+                return false;
+            }
         }
     };
 
     const filteredChoices = pageData.choices.filter(choice => {
-        if (!choice.requiresItem) return true; 
-        return hasItem(inventory, choice.requiresItem);  
+        // if (!choice.requiresItem) {
+        //     return true;  
+        // } 
+        // else if (choice.requiresItem) {
+        // return hasItem(adventureDiary.bag, choice.requiresItem);  
+        // }
+        // else if (choice.requiresCondition) {
+        //     return getDiaryCondition(adventureDiary.condition, choice.requiresCondition);
+        // }
+        // else if (choice.requiresBagCarrier) {
+        //     return readDiaryBagHolder(adventureDiary);
+        // }
+
+        
+        const meetsItemRequirement = !choice.requiresItem || hasItem(adventureDiary.bag, choice.requiresItem);
+    
+        const meetsConditionRequirement = !choice.requiresCondition || getDiaryCondition(adventureDiary.condition, choice.requiresCondition);
+    
+        const meetsBagCarrierRequirement = !choice.requiresBagCarrier || readDiaryBagHolder(adventureDiary, choice.requiresBagCarrier);
+    
+        return meetsItemRequirement || meetsConditionRequirement || meetsBagCarrierRequirement;
+    
+        
+        
     });
 
     if (pageData.end) {
