@@ -257,35 +257,3 @@ export const bookData = {
     },
   };
   
-
-
-
-
-//   40: {
-//     text: `
-//     Спирате за кратка почивка на мястото, където се сливат левият и средният път. Накъде ще продължиш сега? 
-//      `,
-//     choices: [
-//       {
-//         text: `
-//         Напред, където би трябвало да е замъкът на таласъмите — мини на 157. 
-//         `,
-//         nextPage: 157,
-//       },
-//       {
-//         text: `
-//         Обратно по средния път — продължи на 141. 
-//         `,
-//         nextPage: 141,
-//       },
-//     ].filter((choice) => choice.nextPage !== null),
-//   },
-
-
-// requiresItem: { item: "corn", quantity: 1 },
-// addToInventory: [{ item: "water", quantity: 1 }],
-// removeFromInventory: { item: "corn", quantity: 1 },
-//  changeCondition: { condition: "injuredWithFork" },
-//  requiresCondition: { condition: "healthy" },
-
-//  inventoryLeftovers: [{ item: "duck", quantity: 1 }, { item: "pipe", quantity: 1 }],

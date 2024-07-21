@@ -12,23 +12,20 @@ function addItem(adventureDiary, item, quantity) {
     adventureDiary.bag[item] = quantity;
   }
 }
-
-function removeItem(adventureDiary, quantityToRemove, ...items) {
-  items.forEach(item => {
-    if (adventureDiary.bag[item]) {
-      if (adventureDiary.bag[item].quantity > 1) {
-        adventureDiary.bag[item].quantity -= quantityToRemove;
-      } else {
-        delete adventureDiary.bag[item];
-      }
+function removeItem(adventureDiary, requiresItemAndQuantity) {
+  const { item, quantity } = requiresItemAndQuantity;
+  
+  if (adventureDiary.bag.hasOwnProperty(item)) {
+    if (adventureDiary.bag[item] > quantity) {
+      adventureDiary.bag[item] -= quantity;
+    } else {
+      delete adventureDiary.bag[item];
     }
-  });
-}
-function emptyInventory(adventureDiary, inventoryLeftovers) {
-  adventureDiary.bag = [];
-  if (inventoryLeftovers.length > 0) {
-    addItem(adventureDiary, inventoryLeftovers)
   }
+}
+
+function emptyInventory(adventureDiary) {
+  adventureDiary.bag = {};
   return adventureDiary.bag;
 }
 function writeDiaryBagHolder(adventureDiary, chosen) {
