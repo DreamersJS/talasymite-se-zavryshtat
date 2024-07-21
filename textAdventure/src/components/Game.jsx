@@ -21,8 +21,6 @@ export const Game = () => {
     const pageData = bookData.pages[currentPage];
 
     console.log('adventureDiary.bag:', adventureDiary.bag);
-    console.log('bagCarrier:', adventureDiary.bagCarrier);
-
 
     const handleChoice = (nextPage, choice) => {
         if (choice.requiresItem && !hasItem(adventureDiary.bag, choice.requiresItem)) {
@@ -59,6 +57,18 @@ export const Game = () => {
         if (choice.changeCondition) {
             changeDiaryCondition(adventureDiary, choice.changeCondition);
         }
+
+
+        if (Array.isArray(choice.nextPage)) {
+            rollDice(choice.nextPage);
+        } else {
+            setCurrentPage(choice.nextPage);
+        }
+    };
+
+    const rollDice = (pages) => {
+        const randomIndex = Math.floor(Math.random() * pages.length);
+        setCurrentPage(pages[randomIndex]);
     };
 
     const filteredChoices = pageData.choices.filter(choice => {
@@ -84,6 +94,7 @@ export const Game = () => {
 
     return (
         <div>
+            <h3>{currentPage}</h3>
             <p>{pageData.text}</p>
             {filteredChoices.map((choice, index) => (
                 <button key={index} onClick={() => handleChoice(choice.nextPage, choice)}>

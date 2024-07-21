@@ -130,8 +130,8 @@ export const bookData = {
         text: `Добре, но как да му помогнеш? Сега е моментът да провериш с какво разполагаш.`,
         choices: [
           {
-            text: "Ако имаш чифт вехти панталони и искаш да ги дадеш на Мишемориус, мини на 34. ",
-            nextPage: 34,
+            text: "Ако имаш чифт вехти панталони и искаш да ги дадеш на Мишемориус, мини на 13. ",
+            nextPage: 13,
             requiresItem: "oldPants",
             removeFromInventory: { item: "oldPants", quantity: 1 },
           },
@@ -229,6 +229,7 @@ export const bookData = {
             text: "Отбележи си, че нямаш вече диня и премини на 25.",
             nextPage: 25,
             removeFromInventory: { item: "watermelon", quantity: 1 },
+            addToInventory: [{ item: "watermelonBottleWithWater", quantity: 1 }]
           },
         ],
       },
