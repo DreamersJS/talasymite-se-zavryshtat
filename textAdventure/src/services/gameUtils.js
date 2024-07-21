@@ -1,17 +1,25 @@
 function hasItem(adventureDiary, ...items) {
+  if (!adventureDiary || typeof adventureDiary.bag !== 'object') {
+    return false;
+  }
   const inventory = Object.keys(adventureDiary.bag);
-  return items.some(item => inventory.includes(item));
+  return items.map(item => inventory.includes(item));
 }
-function addItem(adventureDiary, addToInventory) {
-  addToInventory.forEach(itemData => {
-    const { item, quantity } = itemData;
-    if (!adventureDiary.bag[item]) {
-      adventureDiary.bag[item] = { quantity };
-    } else {
-      adventureDiary.bag[item].quantity += quantity;
-    }
-  });
+
+function addItem(adventureDiary, item, quantity) {
+  if (!adventureDiary || typeof adventureDiary.bag !== 'object') {
+    throw new Error('Invalid adventure diary or bag.');
+  }
+  if (typeof quantity !== 'number' || quantity <= 0) {
+    throw new Error('Quantity must be a positive number.');
+  }
+  if (adventureDiary.bag.hasOwnProperty(item)) {
+    adventureDiary.bag[item] += quantity;
+  } else {
+    adventureDiary.bag[item] = quantity;
+  }
 }
+
 function removeItem(adventureDiary, quantityToRemove, ...items) {
   items.forEach(item => {
     if (adventureDiary.bag[item]) {
@@ -58,7 +66,7 @@ function diarySecret(adventureDiary) {
     : "The secret is hidden.";
 }
 function ResetDiary(adventureDiary) {
-  adventureDiary.bag = [];
+  adventureDiary.bag = {};
   adventureDiary.bagCarrier = "";
   adventureDiary.condition = {
     healthy: true,

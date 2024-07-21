@@ -12,20 +12,25 @@ import { hasItem,
     diaryMushroomProperties,
     diarySecret,
     ResetDiary, } from '../services/gameUtils.js';
+import { adventureDiary } from '../adventureDiary.js';
 
 export const Game = () => {
     const [currentPage, setCurrentPage] = useState(1);
-    const [inventory, setInventory] = useState([]);
-    const [diary, setDiary] = useState({
-        bagCarrier: "",
-        condition: {},
-        secret: {
-            show: false,
-            text: "This is a secret.",
-        },
-    });
+    // const [diary, setDiary] = useState({
+    //     bag: {},
+    //     bagCarrier: "",
+    //     condition: {},
+    //     secret: {
+    //         show: false,
+    //         text: "This is a secret.",
+    //     },
+    // });
     const pageData = bookData.pages[currentPage];
     
+    console.log('adventureDiary.bag:', adventureDiary.bag);
+    console.log('bagCarrier:', adventureDiary.bagCarrier);
+
+
 
     const handleChoice = (nextPage, choice) => {
         
@@ -38,7 +43,17 @@ export const Game = () => {
 
         
         if (choice.addToInventory) {
-            setInventory([...inventory, choice.addToInventory]);
+
+             choice.addToInventory.map(obj => {
+             addItem(adventureDiary, obj.item, obj.quantity);
+             })
+
+                // setDiary(prevDiary => {
+                //     const newBag = { ...adventureDiary.bag };
+                //     return { ...prevDiary, bag: newBag };
+                // });
+            
+
         }
         if (choice.removeFromInventory) {
             setInventory(inventory.filter(item => item !== choice.removeFromInventory));
@@ -75,7 +90,7 @@ export const Game = () => {
 
     function resetGame() {
         setCurrentPage(1);
-        setInventory([]);
+        setInventory({});
     }
 
     return (
