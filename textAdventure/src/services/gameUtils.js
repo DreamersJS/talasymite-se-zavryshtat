@@ -47,6 +47,14 @@ function changeDiaryCondition(adventureDiary, newCondition) {
       ...newCondition,
   };
 }
+ function resetCondition(adventureDiary) {
+  adventureDiary.condition = {
+      healthy: true,
+      sick: false,
+      injuredWithFork: false,
+      jailed: false,
+  };
+}
 
 function diaryMushroomProperties() {}
 
@@ -91,6 +99,7 @@ export {
   readDiaryBagHolder,
   getDiaryCondition,
   changeDiaryCondition,
+  resetCondition,
   diaryMushroomProperties,
   diarySecret,
   ResetDiary,

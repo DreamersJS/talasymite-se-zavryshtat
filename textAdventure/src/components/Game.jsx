@@ -10,6 +10,7 @@ import {
     readDiaryBagHolder,
     getDiaryCondition,
     changeDiaryCondition,
+    resetCondition,
     diaryMushroomProperties,
     diarySecret,
     ResetDiary,
@@ -20,7 +21,9 @@ export const Game = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const pageData = bookData.pages[currentPage];
 
-    console.log('adventureDiary.bag:', adventureDiary.bag);
+    // console.log('adventureDiary.bag:', adventureDiary.bag);
+    console.log('condition:', adventureDiary.condition);
+
 
     const handleChoice = (nextPage, choice) => {
         if (choice.requiresItem && !hasItem(adventureDiary.bag, choice.requiresItem)) {
@@ -56,7 +59,7 @@ export const Game = () => {
 
         if (choice.changeCondition) {
             changeDiaryCondition(adventureDiary, choice.changeCondition);
-        }
+          }
 
 
         if (Array.isArray(choice.nextPage)) {
