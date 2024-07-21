@@ -10,7 +10,8 @@ function addItem(adventureDiary, item, quantity) {
   }
 }
 
-function removeItem(adventureDiary, { item, quantity }) {
+function removeItem(adventureDiary, removeFromInventory) {
+  const { item, quantity } = removeFromInventory;
   if (adventureDiary.bag.hasOwnProperty(item)) {
       if (adventureDiary.bag[item] > quantity) {
           adventureDiary.bag[item] -= quantity;

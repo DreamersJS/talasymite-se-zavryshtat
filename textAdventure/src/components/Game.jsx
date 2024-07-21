@@ -49,9 +49,7 @@ export const Game = () => {
         }
 
         if (choice.removeFromInventory) {
-            choice.removeFromInventory.forEach(obj => {
-                removeItem(adventureDiary, obj);
-            });
+                removeItem(adventureDiary, choice.removeFromInventory);
         }
 
         if (choice.bagCarrier) {

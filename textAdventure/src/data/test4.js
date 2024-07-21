@@ -24,6 +24,7 @@ export const bookData = {
             text: "Ако имаш стоножка в бурканче, мини на 113. ",
             nextPage: 113,
             requiresItem: { item: "centipede", quantity: 1 },
+            removeFromInventory: { item: "centipede", quantity: 1 },
           },
           {
             text: "Ако имаш лула на мира, продължи на 159. ",
@@ -88,13 +89,13 @@ export const bookData = {
         text: `Имал ли си нещастието преди малко да бъдеш ранен с вилица в ръката?`,
         choices: [
           {
-            text: "Да — мини на 230. ",
-            nextPage: 230,
+            text: "Да — мини на 25. ",
+            nextPage: 25,
             requiresCondition: { condition: "injuredWithFork" },
           },
           {
-            text: "Не — продължи на 284. ",
-            nextPage: 284,
+            text: "Не — продължи на 21. ",
+            nextPage: 21,
             requiresCondition: { condition: "healthy" },
           },
         ].filter((choice) => choice.nextPage !== null),
@@ -202,8 +203,8 @@ export const bookData = {
         text: `— Чакай сега да видим с какво разполагаме — промърморва Фърчилан и започва да рови из торбата.`,
         choices: [
           {
-            text: "Ако имаш домат, мини на 78.",
-            nextPage: 78,
+            text: "Ако имаш домат, мини на 4.",
+            nextPage: 4,
             requiresItem: { item: "tomato", quantity: 1 },
             removeFromInventory: { item: "tomato", quantity: 1 },
           },
@@ -248,9 +249,9 @@ export const bookData = {
               `,
         choices: [
           {
-            text: "Напълваш съдинката си с вода и преминаваш на 177. ",
+            text: "Напълваш съдинката си с вода и преминаваш на 15. ",
             addToInventory: [{ item: "water", quantity: 1 }],
-            nextPage: 177,
+            nextPage: 15,
           },
         ],
       },
