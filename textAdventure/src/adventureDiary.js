@@ -1,5 +1,6 @@
 export const adventureDiary = {
   bag: {},
+  gold: 0,
   bagCarrier: "",
   condition: {
     healthy: true,

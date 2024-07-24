@@ -9,11 +9,11 @@ export const bookData = {
           В следващия миг скачаш от разхвърляното легло и се оглеждаш смаяно. Този път предчувствието не те е излъгало. Наистина си попаднал другаде — в някаква непозната схлупена колиба с едно-единствено зацапано прозорче, през което едва се процеждат утринните лъчи.
           
           Що за дяволия? Как си се озовал тук?`,
+          addToInventory: [{ item: "bag", quantity: 1 }, {item: "corn", quantity: 3 }, { item: "watermelon", quantity: 1 }, {item: "tomato", quantity: 2 }, { item: "beetroot", quantity: 1 }, {item: "pipe", quantity: 1 }, {item: "soap", quantity: 1 }],
         choices: [
           {
             text: "Почесваш се озадачено по тила, после излизаш от колибата и попадаш на 85. ",
             nextPage: 5,
-            addToInventory: [{ item: "bag", quantity: 1 }, {item: "corn", quantity: 3 }, { item: "watermelon", quantity: 1 }, {item: "tomato", quantity: 2 }, { item: "beetroot", quantity: 1 }, {item: "pipe", quantity: 1 }, {item: "soap", quantity: 1 }],
           },
         ],
       },
@@ -256,6 +256,25 @@ export const bookData = {
           },
         ],
       },
+      116: {
+        text: `
+        А какви са отношенията ви със змея? 
+          `,
+        choices: [
+          {
+            text: `
+            Добри — мини на 143. 
+            `,
+            nextPage: 1,
+          },{
+            text: `
+            Не твърде добри — продължи на 162. 
+            `,
+            nextPage: 2,
+          },
+        ],
+      },
+    
     },
   };
   

@@ -82,10 +82,9 @@ export const Game = () => {
     const filteredChoices = pageData.choices.filter(choice => {
         const meetsItemRequirement = !choice.requiresItem || hasItem(adventureDiary.bag, choice.requiresItem);
         const meetsConditionRequirement = !choice.requiresCondition || getDiaryCondition(adventureDiary.condition, choice.requiresCondition.condition);
-        const leadsToUnvisitedPage = !Array.isArray(choice.nextPage) || choice.nextPage.some(page => !visitedPagesCheck(adventureDiary, page));
         const meetsBagCarrierRequirement = !choice.requiresBagCarrier || readDiaryBagHolder(adventureDiary) === choice.requiresBagCarrier;
         const meetsVisitedPagesRequirement = !choice.visitedPages || visitedPagesCheck(adventureDiary, choice.visitedPages);
-        return meetsItemRequirement && meetsConditionRequirement && meetsBagCarrierRequirement && leadsToUnvisitedPage && meetsVisitedPagesRequirement;
+        return meetsItemRequirement && meetsConditionRequirement && meetsBagCarrierRequirement && meetsVisitedPagesRequirement;
     });
 
     if (pageData.end) {
@@ -96,7 +95,17 @@ export const Game = () => {
             </div>
         );
     }
-
+    if (pageData.removeFromInventory) {
+        removeItem(adventureDiary, pageData.removeFromInventory);
+    }
+    if (pageData.addToInventory) {
+        pageData.addToInventory.forEach(obj => {
+            addItem(adventureDiary, obj.item, obj.quantity);
+        });
+    }
+    if (pageData.emptyInventory) {
+        emptyInventory(adventureDiary);
+    }
     function resetGame() {
         setCurrentPage(1);
         ResetDiary(adventureDiary);
@@ -105,7 +114,7 @@ export const Game = () => {
     return (
         <div>
             <h3>{currentPage}</h3>
-            <p>{pageData.text}</p>
+            <p>{pageData?.text}</p>
             {filteredChoices.map((choice, index) => (
                 <button key={index} onClick={() => handleChoice(choice.nextPage, choice)}>
                     {choice.text}

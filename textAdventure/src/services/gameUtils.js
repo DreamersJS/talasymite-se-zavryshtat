@@ -59,6 +59,7 @@ function diarySecret(adventureDiary) {
 
 function ResetDiary(adventureDiary) {
   adventureDiary.bag = {};
+  adventureDiary.gold = 0,
   adventureDiary.bagCarrier = "";
   adventureDiary.condition = {
       healthy: true,
