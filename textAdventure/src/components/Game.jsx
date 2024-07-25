@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-// import { bookData } from '../data/test3.js';
+// import { bookData } from '../data/test4.js';
 import { bookData } from '../data/bookData.js';
 import {
     hasItem,
@@ -23,8 +23,9 @@ export const Game = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const pageData = bookData.pages[currentPage];
 
-    //  console.log('adventureDiary.bag:', adventureDiary.bag);
-    // console.log('condition:', adventureDiary.condition);
+    console.log('inventory:', adventureDiary.bag);
+    console.log('bag-carrier:', adventureDiary.bagCarrier);
+    //  console.log('condition:', adventureDiary.condition);
     console.log('visitedPages:', adventureDiary.visitedPages);
 
     const handleChoice = (nextPage, choice) => {
@@ -63,7 +64,7 @@ export const Game = () => {
 
         if (choice.changeCondition) {
             changeDiaryCondition(adventureDiary, choice.changeCondition);
-          }
+        }
 
 
         if (Array.isArray(choice.nextPage)) {
