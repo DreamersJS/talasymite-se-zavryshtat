@@ -7,7 +7,6 @@ function addItem(adventureDiary, item, quantity) {
   } else {
     adventureDiary.bag[item] = quantity;
   }
-  console.log(`Adding ${quantity} of ${item} to inventory`);
 }
 function removeItem(adventureDiary, removeFromInventory) {
   const { item, quantity } = removeFromInventory;
