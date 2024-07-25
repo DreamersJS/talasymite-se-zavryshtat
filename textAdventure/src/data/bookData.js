@@ -409,7 +409,7 @@ export const bookData = {
       choices: [
         {
           text: "Напълваш съдинката си с вода и преминаваш на 177. ",
-          addToInventory: [{ item: "bottleWater", quantity: 1 }],
+          addToInventory: [{ item: "water", quantity: 1 }],
           nextPage: 177,
         },
       ],

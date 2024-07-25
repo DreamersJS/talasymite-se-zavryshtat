@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // import { bookData } from '../data/test4.js';
 import { bookData } from '../data/bookData.js';
 import {
@@ -24,9 +24,9 @@ export const Game = () => {
     const pageData = bookData.pages[currentPage];
 
     console.log('inventory:', adventureDiary.bag);
-    console.log('bag-carrier:', adventureDiary.bagCarrier);
+    // console.log('bag-carrier:', adventureDiary.bagCarrier);
     //  console.log('condition:', adventureDiary.condition);
-    console.log('visitedPages:', adventureDiary.visitedPages);
+   // console.log('visitedPages:', adventureDiary.visitedPages);
 
     const handleChoice = (nextPage, choice) => {
         if (choice.requiresItem && !hasItem(adventureDiary.bag, choice.requiresItem)) {
@@ -96,17 +96,21 @@ export const Game = () => {
             </div>
         );
     }
-    if (pageData.removeFromInventory) {
-        removeItem(adventureDiary, pageData.removeFromInventory);
-    }
-    if (pageData.addToInventory) {
-        pageData.addToInventory.forEach(obj => {
-            addItem(adventureDiary, obj.item, obj.quantity);
-        });
-    }
-    if (pageData.emptyInventory) {
-        emptyInventory(adventureDiary);
-    }
+    useEffect(() => {
+        if (pageData.removeFromInventory) {
+            pageData.removeFromInventory.forEach(item => {
+                removeItem(adventureDiary, item);
+            });
+        }
+        if (pageData.addToInventory) {
+            pageData.addToInventory.forEach(obj => {
+                addItem(adventureDiary, obj.item, obj.quantity);
+            });
+        }
+        if (pageData.emptyInventory) {
+            emptyInventory(adventureDiary);
+        }
+    }, [pageData]);
     function resetGame() {
         setCurrentPage(1);
         ResetDiary(adventureDiary);
