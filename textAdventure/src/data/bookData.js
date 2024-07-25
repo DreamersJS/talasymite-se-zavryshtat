@@ -5164,30 +5164,35 @@ export const bookData = {
           text: `
       На Хухавел — мини на 15.
       `,
+          requiresBagCarrier: "Хухавел",
           nextPage: 15,
         },
         {
           text: `
       На Бабаитко — продължи на 36.
       `,
+          requiresBagCarrier: "Бабаитко",
           nextPage: 36,
         },
         {
           text: `
       На Фърчилан — прехвърли се на 69.
       `,
+          requiresBagCarrier: "Фърчилан",
           nextPage: 69,
         },
         {
           text: `
       На Гадолини — попадаш на 80.
       `,
+          requiresBagCarrier: "Гадолини",
           nextPage: 80,
         },
         {
           text: `
       Сам носиш торбата — отгърни на 105.
       `,
+          requiresBagCarrier: "самият ти",
           nextPage: 105,
         },
       ],
