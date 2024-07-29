@@ -28,6 +28,7 @@ export const Game = () => {
     const pageData = bookData.pages[currentPage];
 
     console.log('inventory:', adventureDiary.bag);
+    console.log('gold:', adventureDiary.gold);
     //  console.log('condition:', adventureDiary.condition);
     // console.log('visitedPages:', adventureDiary.visitedPages);
 
@@ -108,19 +109,24 @@ export const Game = () => {
         setOpenTrade(prev => !prev);
     };
 
-    const handleTrade = (item, isBuying, quantity) => {
+    const handleTrade = (item, quantity) => {
+        const isBuying = traderInventory.bag.hasOwnProperty(item);
         const price = isBuying ? traderInventory.prices[item].buy : traderInventory.prices[item].sell;
+        const totalCost = price * quantity;
+    
         if (isBuying) {
-          // Buying logic: Player buys from NPC
-          if (adventureDiary.bag.gold >= price * quantity) {
-            adventureDiary.bag.gold -= price * quantity;
-            addItem(adventureDiary, item, quantity);
+          if (adventureDiary.gold >= totalCost) {
+            adventureDiary.gold -= totalCost;
+            addItem(adventureDiary.bag, item, quantity);
+            removeItem(traderInventory.bag, item, quantity);
+            traderInventory.gold += totalCost;
           }
         } else {
-          // Selling logic: Player sells to NPC
           if (hasItem(adventureDiary.bag, item, quantity)) {
-            adventureDiary.bag.gold += price * quantity;
-            removeItem(adventureDiary, item, quantity);
+            adventureDiary.gold += totalCost;
+            removeItem(adventureDiary.bag, item, quantity);
+            addItem(traderInventory.bag, item, quantity);
+            traderInventory.gold -= totalCost;
           }
         }
       };
@@ -145,8 +151,8 @@ export const Game = () => {
                 <div className="trade">
                     <button className="trade" onClick={toggleModal}>close</button>
                     <div className="inventories">
-                        <Inventory title="NPC Inventory" inventory={traderInventory} onTrade={(item) => handleTrade(item, true)} tradeAction="Buy" prices={traderInventory.prices} />
-                        <Inventory title="Player Inventory" inventory={adventureDiary} onTrade={(item) => handleTrade(item, false)} tradeAction="Sell" prices={traderInventory.prices} />
+                        <Inventory title="NPC Inventory" inventory={traderInventory} onTrade={(item, quantity) => handleTrade(item, quantity, true)} tradeAction="Buy" prices={traderInventory.prices} />
+                        <Inventory title="Player Inventory" inventory={adventureDiary} onTrade={(item, quantity) => handleTrade(item, quantity, false)} tradeAction="Sell" prices={traderInventory.prices} />
                     </div>
                 </div>
             )}

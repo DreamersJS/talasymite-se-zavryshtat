@@ -19,3 +19,6 @@ export function removeGold(inventory, amount) {
   }
   inventory.gold -= amount;
 }
+export function calculateCost(prices, item, quantity, type) {
+  return prices[item][type] * quantity;
+}
