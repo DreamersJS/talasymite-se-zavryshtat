@@ -1,31 +1,37 @@
 import { useState } from 'react';
-export const Inventory = ({ title, inventory, onTrade, tradeAction, prices }) => {
-  const [quantityToTrade, setQuantityToTrade] = useState(1);
 
-  const minusOne = () => {
-    if (quantityToTrade <= 1) {
-      return;
-    }
-    setQuantityToTrade(prev => prev - 1);
-  }
+export const Inventory = ({ title, inventory, onTrade, tradeAction, prices }) => {
+  const [quantities, setQuantities] = useState({});
+
+  const minusOne = (item) => {
+    setQuantities(prevQuantities => ({
+      ...prevQuantities,
+      [item]: (prevQuantities[item] || 1) > 1 ? (prevQuantities[item] || 1) - 1 : 1
+    }));
+  };
+
   const plusOne = (item) => {
-    if ( quantityToTrade >= inventory.bag[item]) {
-      return;
-    }
-    setQuantityToTrade(prev => prev + 1);
-  }
+    setQuantities(prevQuantities => ({
+      ...prevQuantities,
+      [item]: (prevQuantities[item] || 1) < inventory.bag[item] ? (prevQuantities[item] || 1) + 1 : inventory.bag[item]
+    }));
+  };
 
   return (
     <div>
       <h3>{title}</h3>
       <ul>
-          <div>
+        <div>
           Gold: {inventory.gold}
-          </div>
+        </div>
         {Object.keys(inventory.bag).map(item => (
           <li key={item}>
-            {item} <button onClick={() => { minusOne() }}>-</button> (x{quantityToTrade})  <button onClick={() => { plusOne(item) }}>+</button>  Price: {tradeAction === 'Buy' ? prices[item].buy * quantityToTrade : prices[item].sell * quantityToTrade }
-            <button onClick={() => onTrade(item, quantityToTrade)}>{tradeAction}</button>
+            {item} 
+            <button onClick={() => minusOne(item)}>-</button> 
+            (x{quantities[item] || 1})  
+            <button onClick={() => plusOne(item)}>+</button>  
+            Price: {tradeAction === 'Buy' ? prices[item].buy * (quantities[item] || 1) : prices[item].sell * (quantities[item] || 1)}
+            <button onClick={() => onTrade(item, quantities[item] || 1)}>{tradeAction}</button>
           </li>
         ))}
       </ul>
