@@ -20,7 +20,7 @@ import { adventureDiary as initialAdventureDiary } from '../adventureDiary.js';
 import { Inventory } from './Inventory/Inventory.jsx';
 import './Game.css';
 import { traderInventory as initialTraderInventory } from '../traderInventory.js';
-import { canAfford, addGold, removeGold } from '../services/trade.service.js';
+import { addGold, removeGold } from '../services/trade.service.js';
 
 export const Game = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -128,9 +128,6 @@ export const Game = () => {
         const price = isBuying ? traderInventory.prices[item].buy : traderInventory.prices[item].sell;
         const totalCost = price * quantity;
 
-        console.log(`Handling trade: ${isBuying ? 'Buying' : 'Selling'} ${item} x${quantity}`);
-        console.log(`Total cost: ${totalCost}`);
-
         if (isBuying) {
             if (adventureDiary.gold >= totalCost) {
                 removeGold(adventureDiary, totalCost);
@@ -173,7 +170,7 @@ export const Game = () => {
             )}
             {openTrade && (
                 <div className="trade">
-                    <button className="trade" onClick={toggleModal}>close</button>
+                    <button className="close" onClick={toggleModal}>close</button>
                     <div className="inventories">
                         <Inventory title="NPC Inventory" inventory={traderInventory} onTrade={(item, quantity) => handleTrade(item, quantity)} tradeAction="Buy" prices={traderInventory.prices} />
                         <Inventory title="Player Inventory" inventory={adventureDiary} onTrade={(item, quantity) => handleTrade(item, quantity)} tradeAction="Sell" prices={traderInventory.prices} />

@@ -1,0 +1,43 @@
+.quantity-minus {
+    width: 0;
+    height: 0;
+    margin: 0px 10px 0px 10px;
+    padding: 0;
+    background-color: transparent;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 20px solid #373737;
+}
+
+.quantity-plus {
+    width: 0;
+    height: 0;
+    margin: 0px 10px 0px 10px;
+    padding: 0;
+    background-color: transparent;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 20px solid #373737;
+}
+
+.quantity-plus:hover {
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-left: 25px solid #373737;
+}
+
+.quantity-minus:hover {
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-right: 25px solid #373737;
+}
+
+.trade-action {
+    margin: 10px 0px 0px 10px;
+    padding: 0.5em;
+}
+
+.trade-action:hover {
+    background-color: #373737;
+    color: white;
+}
