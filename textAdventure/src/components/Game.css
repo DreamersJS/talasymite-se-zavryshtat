@@ -1,0 +1,47 @@
+.game {
+  position: relative;
+}
+
+.trade {
+  text-align: center;
+  margin: 5px;
+  padding: 5px;
+  z-index: 100;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgb(231, 228, 228);
+}
+
+.inventories {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  max-width: 100%;
+  margin: auto;
+}
+
+.inventory {
+  flex: 1;
+  padding: 20px;
+  border: 1px solid #ccc;
+  margin: auto;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.trade ul {
+  list-style-type: none;
+}
+
+.close {
+  text-align: center;
+  position: absolute;
+  margin: 5px;
+  top: 0;
+  padding-bottom: 0;
+  right: 0;
+  background-color: rgb(231, 228, 228);
+}

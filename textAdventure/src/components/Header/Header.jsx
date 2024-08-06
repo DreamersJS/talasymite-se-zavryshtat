@@ -5,7 +5,7 @@ import mushroomBlue from '../../img/mushroomBlue.jpg';
 import mushroomRed from '../../img/mushroomRed.jpg';
 import mushroomGreen from '../../img/mushroomGreen.jpg';
 import mushroomBlack from '../../img/mushroomBlack.jpg';
-import { adventureDiary } from '../adventureDiary';
+import { adventureDiary } from '../../adventureDiary';
 
 export const Header = () => {
     // onClick for Inventory-> modal pop up with some ugly pics of items, on hover names of items? // Sacred or Dragon Age: Origins?

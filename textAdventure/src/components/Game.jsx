@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-// import { bookData } from '../data/test4.js';
+import { useEffect, useState } from 'react';
 import { bookData } from '../data/bookData.js';
 import {
     hasItem,
@@ -17,62 +16,79 @@ import {
     visitedPagesPush,
     visitedPagesCheck,
 } from '../services/gameUtils.js';
-import { adventureDiary } from '../adventureDiary.js';
+import { adventureDiary as initialAdventureDiary } from '../adventureDiary.js';
+import { Inventory } from './Inventory/Inventory.jsx';
+import './Game.css';
+import { traderInventory as initialTraderInventory } from '../traderInventory.js';
+import { addGold, removeGold } from '../services/trade.service.js';
 
 export const Game = () => {
     const [currentPage, setCurrentPage] = useState(1);
+    const [openTrade, setOpenTrade] = useState(false);
+    const [adventureDiary, setAdventureDiary] = useState({ ...initialAdventureDiary });
+    const [traderInventory, setTraderInventory] = useState({ ...initialTraderInventory });
     const pageData = bookData.pages[currentPage];
 
-    console.log('inventory:', adventureDiary.bag);
-    // console.log('bag-carrier:', adventureDiary.bagCarrier);
-    //  console.log('condition:', adventureDiary.condition);
-   // console.log('visitedPages:', adventureDiary.visitedPages);
+    useEffect(() => {
+        if (currentPage !== 1) {  
+            if (pageData.removeFromInventory) {
+                pageData.removeFromInventory.forEach(item => {
+                    removeItem(adventureDiary, item);
+                });
+                setAdventureDiary({ ...adventureDiary }); 
+            }
+            if (pageData.addToInventory) {
+                pageData.addToInventory.forEach(obj => {
+                    addItem(adventureDiary, obj.item, obj.quantity);
+                });
+                setAdventureDiary({ ...adventureDiary }); 
+            }
+            if (pageData.emptyInventory) {
+                emptyInventory(adventureDiary);
+                setAdventureDiary({ ...adventureDiary }); 
+            }
+        }
+    }, [currentPage, pageData]);
+
 
     const handleChoice = (nextPage, choice) => {
         if (choice.requiresItem && !hasItem(adventureDiary.bag, choice.requiresItem)) {
             return;
         }
-
         if (choice.requiresCondition && !getDiaryCondition(adventureDiary.condition, choice.requiresCondition.condition)) {
             return;
         }
-
         if (choice.requiresBagCarrier && readDiaryBagHolder(adventureDiary) !== choice.requiresBagCarrier) {
             return;
         }
-
         if (choice.visitedPages && !visitedPagesCheck(adventureDiary, choice.visitedPages)) {
             return;
         }
-
         visitedPagesPush(adventureDiary, currentPage);
         setCurrentPage(nextPage);
-
         if (choice.addToInventory) {
             choice.addToInventory.forEach(obj => {
                 addItem(adventureDiary, obj.item, obj.quantity);
             });
+            setAdventureDiary({ ...adventureDiary });
         }
-
         if (choice.removeFromInventory) {
             removeItem(adventureDiary, choice.removeFromInventory);
+            setAdventureDiary({ ...adventureDiary });
         }
-
         if (choice.bagCarrier) {
             writeDiaryBagHolder(adventureDiary, choice.bagCarrier);
+            setAdventureDiary({ ...adventureDiary });
         }
-
         if (choice.changeCondition) {
             changeDiaryCondition(adventureDiary, choice.changeCondition);
+            setAdventureDiary({ ...adventureDiary });
         }
-
-
         if (Array.isArray(choice.nextPage)) {
             rollDice(choice.nextPage);
         } else {
             setCurrentPage(choice.nextPage);
         }
-
     };
 
     const rollDice = (pages) => {
@@ -96,28 +112,48 @@ export const Game = () => {
             </div>
         );
     }
-    useEffect(() => {
-        if (pageData.removeFromInventory) {
-            pageData.removeFromInventory.forEach(item => {
-                removeItem(adventureDiary, item);
-            });
-        }
-        if (pageData.addToInventory) {
-            pageData.addToInventory.forEach(obj => {
-                addItem(adventureDiary, obj.item, obj.quantity);
-            });
-        }
-        if (pageData.emptyInventory) {
-            emptyInventory(adventureDiary);
-        }
-    }, [pageData]);
+
+    const toggleModal = () => {
+        setOpenTrade(prev => !prev);
+    };
+
     function resetGame() {
         setCurrentPage(1);
         ResetDiary(adventureDiary);
+        setAdventureDiary({ ...initialAdventureDiary });
     }
 
+    const handleTrade = (item, quantity) => {
+        const isBuying = !adventureDiary.bag.hasOwnProperty(item);
+        const price = isBuying ? traderInventory.prices[item].buy : traderInventory.prices[item].sell;
+        const totalCost = price * quantity;
+
+        if (isBuying) {
+            if (adventureDiary.gold >= totalCost) {
+                removeGold(adventureDiary, totalCost);
+                addItem(adventureDiary, item, quantity);
+                removeItem(traderInventory, { item, quantity });
+                addGold(traderInventory, totalCost);
+            } else {
+                console.log("Not enough gold to buy");
+            }
+        } else {
+            if (hasItem(adventureDiary.bag, { item, quantity })) {
+                addGold(adventureDiary, totalCost);
+                removeItem(adventureDiary, { item, quantity });
+                addItem(traderInventory, item, quantity);
+                removeGold(traderInventory, totalCost);
+            } else {
+                console.log("Not enough item to sell");
+            }
+        }
+
+        setAdventureDiary({ ...adventureDiary });
+        setTraderInventory({ ...traderInventory });
+    };
+
     return (
-        <div>
+        <div className="game">
             <h3>{currentPage}</h3>
             <p>{pageData?.text}</p>
             {filteredChoices.map((choice, index) => (
@@ -126,7 +162,21 @@ export const Game = () => {
                 </button>
             ))}
             {pageData.moreText && (<p>{pageData.moreText}</p>)}
+
+            {pageData.trade && (
+                <div>
+                    <button onClick={toggleModal}>TRADE</button>
+                </div>
+            )}
+            {openTrade && (
+                <div className="trade">
+                    <button className="close" onClick={toggleModal}>close</button>
+                    <div className="inventories">
+                        <Inventory title="NPC Inventory" inventory={traderInventory} onTrade={(item, quantity) => handleTrade(item, quantity)} tradeAction="Buy" prices={traderInventory.prices} />
+                        <Inventory title="Player Inventory" inventory={adventureDiary} onTrade={(item, quantity) => handleTrade(item, quantity)} tradeAction="Sell" prices={traderInventory.prices} />
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
-
