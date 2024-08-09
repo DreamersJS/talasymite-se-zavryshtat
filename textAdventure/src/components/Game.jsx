@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { bookData } from '../data/bookData.js';
 import {
     hasItem,
@@ -9,12 +10,9 @@ import {
     readDiaryBagHolder,
     getDiaryCondition,
     changeDiaryCondition,
-    resetCondition,
-    diaryMushroomProperties,
-    diarySecret,
-    ResetDiary,
     visitedPagesPush,
     visitedPagesCheck,
+    ResetDiary
 } from '../services/gameUtils.js';
 import { adventureDiary as initialAdventureDiary } from '../adventureDiary.js';
 import { Inventory } from './Inventory/Inventory.jsx';
@@ -23,33 +21,44 @@ import { traderInventory as initialTraderInventory } from '../traderInventory.js
 import { addGold, removeGold } from '../services/trade.service.js';
 
 export const Game = () => {
-    const [currentPage, setCurrentPage] = useState(1);
+    const { page } = useParams(); 
+    const navigate = useNavigate(); 
+    const [currentPage, setCurrentPage] = useState(parseInt(page, 10) || 1); // parseInt(page, 10) second arg is decimal sys
     const [openTrade, setOpenTrade] = useState(false);
     const [adventureDiary, setAdventureDiary] = useState({ ...initialAdventureDiary });
     const [traderInventory, setTraderInventory] = useState({ ...initialTraderInventory });
     const pageData = bookData.pages[currentPage];
 
     useEffect(() => {
-        if (currentPage !== 1) {  
+        if (page) {
+            setCurrentPage(parseInt(page, 10));
+        }
+    }, [page]);
+
+    useEffect(() => {
+        navigate(`/game/${currentPage}`, { replace: true });
+    }, [currentPage, navigate]);
+
+    useEffect(() => {
+        if (currentPage !== 1) {
             if (pageData.removeFromInventory) {
                 pageData.removeFromInventory.forEach(item => {
                     removeItem(adventureDiary, item);
                 });
-                setAdventureDiary({ ...adventureDiary }); 
+                setAdventureDiary({ ...adventureDiary });
             }
             if (pageData.addToInventory) {
                 pageData.addToInventory.forEach(obj => {
                     addItem(adventureDiary, obj.item, obj.quantity);
                 });
-                setAdventureDiary({ ...adventureDiary }); 
+                setAdventureDiary({ ...adventureDiary });
             }
             if (pageData.emptyInventory) {
                 emptyInventory(adventureDiary);
-                setAdventureDiary({ ...adventureDiary }); 
+                setAdventureDiary({ ...adventureDiary });
             }
         }
-    }, [currentPage, pageData]);
-
+    }, [currentPage, pageData, adventureDiary]);
 
     const handleChoice = (nextPage, choice) => {
         if (choice.requiresItem && !hasItem(adventureDiary.bag, choice.requiresItem)) {
@@ -66,6 +75,7 @@ export const Game = () => {
         }
         visitedPagesPush(adventureDiary, currentPage);
         setCurrentPage(nextPage);
+
         if (choice.addToInventory) {
             choice.addToInventory.forEach(obj => {
                 addItem(adventureDiary, obj.item, obj.quantity);
@@ -119,6 +129,7 @@ export const Game = () => {
 
     function resetGame() {
         setCurrentPage(1);
+        navigate(`/game/1`); 
         ResetDiary(adventureDiary);
         setAdventureDiary({ ...initialAdventureDiary });
     }
