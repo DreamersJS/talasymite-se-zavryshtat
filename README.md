@@ -2,7 +2,8 @@
 
 ### Description
 
-The Game Adventure project is a SPA, interactive text-based adventure game implemented using React. Players navigate through a storyline by making choices, managing an inventory, trading with NPCs, and experiencing various in-game events.
+The Game Adventure project is a SPA, interactive text-based adventure game implemented using React. Players navigate through a storyline by making choices that affect the storyline based on their inventory and health conditions, managing an inventory, trading with NPCs, and experiencing various in-game events.
+
 
 ### Key Technologies:
 
@@ -12,11 +13,15 @@ JavaScript: For implementing game logic and functionality.
 
 CSS: For styling the game interface.
 
+- **Service Functions:** Separated business logic into service functions for better code organization and maintainability.
+- **Deployment:** The application is deployed on Vercel, providing a seamless and fast user experience.
+  
+
 ### Core Features:
 
 Dynamic Page Navigation:
 
-    Players can navigate through the game by making choices that affect the storyline.
+    Implemented using React Router. Players can navigate through the game by making choices that affect the storyline.
     The current page updates based on player decisions, and specific events are triggered accordingly.
 
 Inventory Management:
