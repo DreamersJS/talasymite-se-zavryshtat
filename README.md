@@ -13,6 +13,7 @@ JavaScript: For implementing game logic and functionality.
 
 CSS: For styling the game interface.
 
+Other:
 - **Service Functions:** Separated business logic into service functions for better code organization and maintainability.
 - **Deployment:** The application is deployed on Vercel, providing a seamless and fast user experience.
   
