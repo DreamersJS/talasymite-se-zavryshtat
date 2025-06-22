@@ -14,7 +14,7 @@ import {
     visitedPagesCheck,
     ResetDiary
 } from '../services/gameUtils.js';
-import { adventureDiary as initialAdventureDiary } from '../adventureDiary.js';
+import { initialAdventureDiary } from '../adventureDiary.js';
 import { Inventory } from './Inventory/Inventory.jsx';
 import './Game.css';
 import { traderInventory as initialTraderInventory } from '../traderInventory.js';
@@ -144,11 +144,12 @@ export const Game = () => {
     };
 
     function resetGame() {
+        const freshDiary = JSON.parse(JSON.stringify(initialAdventureDiary));  
+        setAdventureDiary(freshDiary);
         setCurrentPage(1);
-        navigate(`/game/1`); 
-        ResetDiary(adventureDiary);
-        setAdventureDiary({ ...initialAdventureDiary });
+        navigate(`/game/1`);
     }
+    
 
     const handleTrade = (item, quantity) => {
         const isBuying = !adventureDiary.bag.hasOwnProperty(item);

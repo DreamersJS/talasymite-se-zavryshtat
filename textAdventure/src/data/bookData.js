@@ -3186,7 +3186,7 @@ export const bookData = {
       Ако имаш кратунка и искаш да си налееш вода — мини на 194.
       `,
           requiresItem: { item: "groud", quantity: 1 }, 
-          removeFromInventory: { item: "groud", quantity: 1 },
+          removeFromInventory: { item: "groud", quantity: 1 }, // a ako все пак не налея вода?
           nextPage: 194,
         },
         {

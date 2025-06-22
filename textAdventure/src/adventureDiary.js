@@ -1,4 +1,4 @@
-export const adventureDiary = {
+export const initialAdventureDiary = {
   bag: {},
   gold: 0,
   bagCarrier: "",
