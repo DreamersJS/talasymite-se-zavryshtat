@@ -21,7 +21,7 @@ import { traderInventory as initialTraderInventory } from '../traderInventory.js
 import { addGold, removeGold } from '../services/trade.service.js';
 
 export const Game = () => {
-    const { page } = useParams(); 
+    let { page } = useParams(); 
     const navigate = useNavigate(); 
     const [currentPage, setCurrentPage] = useState(parseInt(page, 10) || 1); // parseInt(page, 10) second arg is decimal sys
     const [openTrade, setOpenTrade] = useState(false);
@@ -34,7 +34,13 @@ export const Game = () => {
             setCurrentPage(parseInt(page, 10));
         }
     }, [page]);
-
+    
+    useEffect(() => {
+        if (adventureDiary) {
+            console.log(adventureDiary);
+        }
+    }, [adventureDiary]);
+    
     useEffect(() => {
         navigate(`/game/${currentPage}`, { replace: true });
     }, [currentPage, navigate]);
@@ -58,7 +64,7 @@ export const Game = () => {
                 setAdventureDiary({ ...adventureDiary });
             }
         }
-    }, [currentPage, pageData, adventureDiary]);
+    }, [currentPage, pageData, adventureDiary]); // must fix tha loop
 
     const handleChoice = (nextPage, choice) => {
         if (choice.requiresItem && !hasItem(adventureDiary.bag, choice.requiresItem)) {
@@ -106,14 +112,6 @@ export const Game = () => {
         setCurrentPage(pages[randomIndex]);
     };
 
-    const filteredChoices = pageData.choices.filter(choice => {
-        const meetsItemRequirement = !choice.requiresItem || hasItem(adventureDiary.bag, choice.requiresItem);
-        const meetsConditionRequirement = !choice.requiresCondition || getDiaryCondition(adventureDiary.condition, choice.requiresCondition.condition);
-        const meetsBagCarrierRequirement = !choice.requiresBagCarrier || readDiaryBagHolder(adventureDiary) === choice.requiresBagCarrier;
-        const meetsVisitedPagesRequirement = !choice.visitedPages || visitedPagesCheck(adventureDiary, choice.visitedPages);
-        return meetsItemRequirement && meetsConditionRequirement && meetsBagCarrierRequirement && meetsVisitedPagesRequirement;
-    });
-
     if (pageData.end) {
         return (
             <div>
@@ -122,6 +120,14 @@ export const Game = () => {
             </div>
         );
     }
+    const filteredChoices = pageData?.choices.filter(choice => {
+        const meetsItemRequirement = !choice.requiresItem || hasItem(adventureDiary.bag, choice.requiresItem);
+        const meetsConditionRequirement = !choice.requiresCondition || getDiaryCondition(adventureDiary.condition, choice.requiresCondition.condition);
+        const meetsBagCarrierRequirement = !choice.requiresBagCarrier || readDiaryBagHolder(adventureDiary) === choice.requiresBagCarrier;
+        const meetsVisitedPagesRequirement = !choice.visitedPages || visitedPagesCheck(adventureDiary, choice.visitedPages);
+        return meetsItemRequirement && meetsConditionRequirement && meetsBagCarrierRequirement && meetsVisitedPagesRequirement;
+    });
+
 
     const toggleModal = () => {
         setOpenTrade(prev => !prev);
@@ -191,3 +197,13 @@ export const Game = () => {
         </div>
     );
 };
+
+/**
+ * Warning: Maximum update depth exceeded. This can happen when a component calls setState inside useEffect, but useEffect either doesn't have a dependency array, or one of the dependencies changes on every render. Component Stack: 
+    Game Game.jsx:24
+    RenderedRoute hooks.tsx:658
+    Routes components.tsx:506
+    Router components.tsx:420
+    BrowserRouter index.tsx:788
+    App unknown:0
+ */

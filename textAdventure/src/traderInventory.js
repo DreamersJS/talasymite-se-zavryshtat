@@ -1,6 +1,6 @@
 export const traderInventory = {
     bag: {
-        gourd: 1,
+        groud: 1,
         mirror: 1,
         macaron: 1,
         hole: 1,
@@ -12,7 +12,7 @@ export const traderInventory = {
         twistedTrinket: 1,
     },
     prices: {
-        gourd: { buy: 1, sell: 1 },
+        groud: { buy: 1, sell: 1 },
         mirror: { buy: 3, sell: 3 },
         macaron: { buy: 2, sell: 2 },
         hole: { buy: 5, sell: 5 },
@@ -21,7 +21,7 @@ export const traderInventory = {
         shampoo: { buy: 2, sell: 2 },
         dryWater: { buy: 2, sell: 2 },
         oldTrousers: { buy: 1, sell: 1 },
-        twistedTrinket: { buy: 4, sell: 4 },
+        twistedTrinket: { buy: 4, sell: 4 },// normal water
         tomato: { buy: 1, sell: 1 },
         corn: { buy: 2, sell: 2 },
         beetroot: { buy: 3, sell: 3 },
@@ -29,6 +29,14 @@ export const traderInventory = {
         watermelon: { buy: 5, sell: 5 },
         pipe: { buy: 8, sell: 8 },
         duck: { buy: 12, sell: 12 },
+        // straigthTrinket
+        // bottleOfWater
+        // bottleOfSolvent
+        // bottleEmpty
+        // herb
+        // shall i add them as non sellables?
+        // straigthTrinket: { buy: 4, sell: 4 },
+        // the mushrooms arent added to the inventory?
       },
     gold: 50, 
   };

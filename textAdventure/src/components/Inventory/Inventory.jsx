@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './Inventory.css';
 
 export const Inventory = ({ title, inventory, onTrade, tradeAction, prices }) => {
@@ -25,13 +25,13 @@ export const Inventory = ({ title, inventory, onTrade, tradeAction, prices }) =>
         <div>
           Gold: {inventory.gold}
         </div>
-        {Object.keys(inventory.bag).map(item => (
+        {Object.keys(inventory.bag).filter(e=> e !=="mushrooms" && e !=='straigthTrinket' && e !=='bottleOfSolvent' && e !=='bottleOfWater' && e !=='herb').map(item => (
           <li key={item}>
             {item} 
             <button className='quantity-minus' onClick={() => minusOne(item)}></button> 
             (x{quantities[item] || 1})  
             <button className='quantity-plus' onClick={() => plusOne(item)}></button>  
-            Price: {tradeAction === 'Buy' ? prices[item].buy * (quantities[item] || 1) : prices[item].sell * (quantities[item] || 1)}
+            Price: {tradeAction === 'Buy' ? prices[item]?.buy * (quantities[item] || 1) : prices[item]?.sell * (quantities[item] || 1)}
             <button className='trade-action' onClick={() => onTrade(item, quantities[item] || 1)}>{tradeAction}</button>
           </li>
         ))}
