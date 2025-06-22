@@ -46,25 +46,35 @@ export const Game = () => {
     }, [currentPage, navigate]);
 
     useEffect(() => {
-        if (currentPage !== 1) {
+        if (currentPage !== 1 && !visitedPagesCheck(adventureDiary, currentPage)) {
+            let updated = false;
+    
             if (pageData.removeFromInventory) {
                 pageData.removeFromInventory.forEach(item => {
                     removeItem(adventureDiary, item);
                 });
-                setAdventureDiary({ ...adventureDiary });
+                updated = true;
             }
+    
             if (pageData.addToInventory) {
                 pageData.addToInventory.forEach(obj => {
                     addItem(adventureDiary, obj.item, obj.quantity);
                 });
-                setAdventureDiary({ ...adventureDiary });
+                updated = true;
             }
+    
             if (pageData.emptyInventory) {
                 emptyInventory(adventureDiary);
+                updated = true;
+            }
+    
+            if (updated) {
+                visitedPagesPush(adventureDiary, currentPage); // mark the page as visited
                 setAdventureDiary({ ...adventureDiary });
             }
         }
-    }, [currentPage, pageData, adventureDiary]); // must fix tha loop
+    }, [currentPage, pageData, adventureDiary]);
+     // must fix tha loop
 
     const handleChoice = (nextPage, choice) => {
         if (choice.requiresItem && !hasItem(adventureDiary.bag, choice.requiresItem)) {

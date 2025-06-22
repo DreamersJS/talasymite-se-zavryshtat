@@ -844,32 +844,22 @@ export const bookData = {
       Пред вас старчето продължава да шепне тихичко и да се чеше с всичка сила по главата, но накрая унило махва с ръка, после се обръща към теб. 
       — Че ме измамихте, измамихте ме, ама не мога да разбера как. Нейсе. Ела да направим още една сделка, обаче тоя път нищо не давам, преди да платиш. 
              `,
-      // addToInventory: [
-      //   { item: "book", quantity: 1 },
-      //   { item: "centipede", quantity: 1 },
-      //   { item: "oldTrousers", quantity: 1 },
-      // ],
+      addToInventory: [
+        { item: "book", quantity: 1 },
+        { item: "centipede", quantity: 1 },
+        { item: "oldTrousers", quantity: 1 },
+      ],
       choices: [
         {
           text: `
           Ако искаш да търгуваш с вехтошаря, мини на 119. 
           `,
-          addToInventory: [
-            { item: "book", quantity: 1 },
-            { item: "centipede", quantity: 1 },
-            { item: "oldTrousers", quantity: 1 },
-          ],
           nextPage: 119,
         },
         {
           text: `
           Ако смяташ, че е крайно време да си тръгвате, прехвърли се на 158. 
           `,
-          addToInventory: [
-            { item: "book", quantity: 1 },
-            { item: "centipede", quantity: 1 },
-            { item: "oldTrousers", quantity: 1 },
-          ],
           nextPage: 158,
         },
       ],
@@ -2533,20 +2523,18 @@ export const bookData = {
       Забелязваш в ъгъла да се търкаля празна кратунка. Ако искаш, можеш да я вземеш, чародеят няма да има нищо против. 
       Имаш ли вълшебни гъби? 
       `,
-      // addToInventory: [{ item: "groud", quantity: 1 }],
+      addToInventory: [{ item: "groud", quantity: 1 }],
       choices: [
         {
           text: `
           Да — мини на 156.
           `,
-          addToInventory: [{ item: "groud", quantity: 1 }],
           nextPage: 156,
         },
         {
           text: `
           Не — продължи на 183.
           `,
-          addToInventory: [{ item: "groud", quantity: 1 }],
           nextPage: 183,
         },
       ],
@@ -3197,7 +3185,6 @@ export const bookData = {
           text: `
       Ако имаш кратунка и искаш да си налееш вода — мини на 194.
       `,
-          // requiresItem: [{ item: "groud", quantity: 1 }], 
           requiresItem: { item: "groud", quantity: 1 }, 
           removeFromInventory: { item: "groud", quantity: 1 },
           nextPage: 194,
@@ -3208,7 +3195,6 @@ export const bookData = {
       `,
           requiresItem: { item: "bottleOfSolvent", quantity: 1 },
           removeFromInventory: { item: "bottleOfSolvent", quantity: 1 },
-          // addToInventory: [{ item: "bottleOfWater", quantity: 1 }],// not yet
           nextPage: 194,
         },
         ,
@@ -3218,7 +3204,6 @@ export const bookData = {
       `,
           requiresItem: { item: "dryWater", quantity: 1 },
           removeFromInventory: { item: "dryWater", quantity: 1 },
-          // addToInventory: [{ item: "bottleOfWater", quantity: 1 }],
           nextPage: 194,
         },
         {
@@ -3810,21 +3795,19 @@ export const bookData = {
 — Част от машината за производство на суха вода — обяснява Мишемориус. — Друго нямам. Вземи я, все ще ти свърши работа.
 Ако искаш да приемеш подаръка, запиши си, че вече имаш права джаджа. А имаш ли и усукана джаджа?
   `,
-      // addToInventory: [{ item: "straightTrinket", quantity: 1 }],
+      addToInventory: [{ item: "straightTrinket", quantity: 1 }],
       choices: [
         {
           text: `
       Ако да, мини на 216.
       `,
           requiresItem: { item: "twistedTrinket", quantity: 1 },
-          addToInventory: [{ item: "straightTrinket", quantity: 1 }],
           nextPage: 216,
         },
         {
           text: `
       Ако не, продължи на 237.
       `,
-          addToInventory: [{ item: "straightTrinket", quantity: 1 }],
           nextPage: 237,
         },
       ],
@@ -3864,21 +3847,6 @@ export const bookData = {
 — Ако има какво да ядем — ухилва се Гадолини.
 Е, това е положението. Запиши си наличните провизии и след това премини на 197.
   `,
-      // addToInventory: [
-      //   { item: "duck", quantity: 1 },
-      //   { item: "corn", quantity: 3 },
-      //   { item: "watermelon", quantity: 1 },
-      //   { item: "tomato", quantity: 2 },
-      //   { item: "beetroot", quantity: 1 },
-      //   { item: "pipe", quantity: 1 },
-      //   { item: "soap", quantity: 1 },
-      // ],
-
-      choices: [
-        {
-          text: `
-      Запиши си наличните провизии и след това премини на 197.
-      `,
       addToInventory: [
         { item: "duck", quantity: 1 },
         { item: "corn", quantity: 3 },
@@ -3888,6 +3856,21 @@ export const bookData = {
         { item: "pipe", quantity: 1 },
         { item: "soap", quantity: 1 },
       ],
+
+      choices: [
+        {
+          text: `
+      Запиши си наличните провизии и след това премини на 197.
+      `,
+      // addToInventory: [
+      //   { item: "duck", quantity: 1 },
+      //   { item: "corn", quantity: 3 },
+      //   { item: "watermelon", quantity: 1 },
+      //   { item: "tomato", quantity: 2 },
+      //   { item: "beetroot", quantity: 1 },
+      //   { item: "pipe", quantity: 1 },
+      //   { item: "soap", quantity: 1 },
+      // ],
           nextPage: 197,
         },
       ],
