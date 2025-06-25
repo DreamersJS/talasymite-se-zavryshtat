@@ -1,23 +1,40 @@
-function hasItem(bag, requiresItem) {
-  return bag[requiresItem.item] >= requiresItem.quantity;
-}
-function addItem(adventureDiary, item, quantity) {
-  if (adventureDiary.bag.hasOwnProperty(item)) {
-    adventureDiary.bag[item] += quantity;
+
+function newAddItem(adventureDiary, itemKey, quantity, meta = {}, dBItemsData) {
+  if (adventureDiary.bag.hasOwnProperty(itemKey)) {
+    adventureDiary.bag[itemKey].quantity += quantity;
   } else {
-    adventureDiary.bag[item] = quantity;
+    const itemData = { ...dBItemsData[itemKey], quantity, ...meta };
+    adventureDiary.bag[itemKey] = itemData;
   }
 }
-function removeItem(adventureDiary, removeFromInventory) {
-  const { item, quantity } = removeFromInventory;
-  if (adventureDiary.bag.hasOwnProperty(item)) {
-    if (adventureDiary.bag[item] > quantity) {
-      adventureDiary.bag[item] -= quantity;
-    } else {
-      delete adventureDiary.bag[item];
-    }
+
+function newRemoveItem(adventureDiary, itemKey, quantity) {
+  if (!adventureDiary.bag.hasOwnProperty(itemKey)) {
+    console.warn(`Item "${itemKey}" not available.`);
+    return false;
+  }
+
+  const currentQuantity = adventureDiary.bag[itemKey].quantity;
+
+  if (currentQuantity > quantity) {
+    adventureDiary.bag[itemKey].quantity -= quantity;
+    return true;
+  } else if (currentQuantity === quantity) {
+    delete adventureDiary.bag[itemKey];
+    return true;
+  } else {
+    console.warn(`Not enough quantity of "${itemKey}". Have: ${currentQuantity}, tried to remove: ${quantity}`);
+    return false;
   }
 }
+
+function newHasItem(adventureDiary, itemKey, quantity = 1) {
+  return (
+    adventureDiary.bag.hasOwnProperty(itemKey) &&
+    adventureDiary.bag[itemKey].quantity >= quantity
+  );
+}
+
 function emptyInventory(adventureDiary) {
   adventureDiary.bag = {};
   return adventureDiary.bag;
@@ -63,32 +80,6 @@ function diarySecret(adventureDiary) {
     : "The secret is hidden.";
 }
 
-function ResetDiary(adventureDiary) {
-  adventureDiary.bag = {};
-  (adventureDiary.gold = 0), (adventureDiary.bagCarrier = "");
-  adventureDiary.condition = {
-    healthy: true,
-    sick: false,
-    injuredWithFork: false,
-    jailed: false,
-  };
-  adventureDiary.mushroomProperties = {
-    yellow: { description: "увеличава онзи, който хапне от нея.", show: false },
-    blue: { description: "смалява многократно консуматора си.", show: false },
-    red: { description: "силно намалява теглото.", show: false },
-    green: { description: "увеличава теглото.", show: false },
-    black: {
-      description: "невероятно отровна, убива жертвата за броени минути.",
-      show: false,
-    },
-  };
-  adventureDiary.secret = {
-    show: false,
-    text: "Според едно древно предсказание на Дървеняк му е предречено, че ще издъхне моментално, ако го поръси и капка вода.",
-  };
-  adventureDiary.visitedPages = [];
-}
-
 function visitedPagesPush(adventureDiary, currentPage) {
   if (!adventureDiary.visitedPages.includes(currentPage)) {
     adventureDiary.visitedPages.push(currentPage);
@@ -98,9 +89,6 @@ function visitedPagesCheck(adventureDiary, pageToCheck) {
   return adventureDiary.visitedPages.includes(pageToCheck);
 }
 export {
-  hasItem,
-  addItem,
-  removeItem,
   emptyInventory,
   writeDiaryBagHolder,
   readDiaryBagHolder,
@@ -109,7 +97,9 @@ export {
   resetCondition,
   diaryMushroomProperties,
   diarySecret,
-  ResetDiary,
   visitedPagesPush,
   visitedPagesCheck,
+  newAddItem,
+  newRemoveItem,
+  newHasItem,
 };
