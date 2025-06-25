@@ -21,54 +21,87 @@ export const Inventory = ({ title, inventory, onTrade, tradeAction, prices }) =>
         <div>
           Gold: {inventory.gold}
         </div>
-        {Object.keys(inventory.bag).map(item => (
-          <li key={item}>
-            {/* {item} */}
-            <div  className="tooltip-wrapper">
+        {Object.keys(inventory.bag).map(item => {
+          const itemData = inventory.bag[item];
+          const isComposite = item === 'mushrooms';
 
-            
-<strong>
-{itemsData[item].displayName}
-</strong>
+          if (isComposite) {
+            return (
+              <li key={item}>
+                <strong>{itemData.displayName}</strong>
+                {itemData.sellable == false && <span className="unsellable-note">(Not sellable)</span>}
+                <ul className="mushroom-list">
+                  {Object.entries(itemData).map(([key, subItem]) => {
+                    if (
+                      ['quantity', 'displayName', 'sellable'].includes(key) ||
+                      typeof subItem !== 'object'
+                    ) return null;
 
-{
- itemsData[item].description && itemsData[item]?.showDescription !== false && (
-<span className='tooltip-text'>
-{itemsData[item].description}
-</span>
-  )
-}
+                    return (
+                      <li key={key} className="mushroom-entry tooltip-wrapper">
+                        <p>
+                          <span><img src={subItem.picture} alt="Mushrooms" style={{ height: '25px' }} /></span>
+                          {subItem.displayName}
+                          {subItem.description && subItem.showDescription && (
+                            <span className="tooltip-text">{subItem.description}</span>
+                          )}
+                        </p>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </li>
+            );
+          }
 
-            {/* sellable */}
-            <>
-              {itemsData[item]?.sellable !== false ? (
+          return (
+            <li key={item}>
+              {/* {item} */}
+              <div className="tooltip-wrapper">
+
+                <strong>
+                  {itemsData[item].displayName}
+                </strong>
+
+                {
+                  itemsData[item].description && itemsData[item]?.showDescription !== false && (
+                    <span className='tooltip-text'>
+                      {itemsData[item].description}
+                    </span>
+                  )
+                }
+
+                {/* sellable */}
                 <>
-                  {/* +- quantity buttons */}
-                  <button className='quantity-minus' onClick={() => minusOne(item)} disabled={(quantities[item] || 1) <= 1}></button>
-                  (x{quantities[item] || 1})
-                  <button className='quantity-plus' onClick={() => plusOne(item)} disabled={(quantities[item] || 1) >= inventory.bag[item].quantity}></button>
+                  {itemsData[item]?.sellable !== false ? (
+                    <>
+                      {/* +- quantity buttons */}
+                      <button className='quantity-minus' onClick={() => minusOne(item)} disabled={(quantities[item] || 1) <= 1}></button>
+                      (x{quantities[item] || 1})
+                      <button className='quantity-plus' onClick={() => plusOne(item)} disabled={(quantities[item] || 1) >= inventory.bag[item].quantity}></button>
 
-                  {/* buy sell actions */}
-                  Price: {
-                    tradeAction === 'Buy'
-                      ? prices[item]?.buy * (quantities[item] || 1)
-                      : prices[item]?.sell * (quantities[item] || 1)
+                      {/* buy sell actions */}
+                      Price: {
+                        tradeAction === 'Buy'
+                          ? prices[item]?.buy * (quantities[item] || 1)
+                          : prices[item]?.sell * (quantities[item] || 1)
+                      }
+                      <button
+                        className="trade-action"
+                        onClick={() => onTrade(item, quantities[item] || 1)}
+                        disabled={itemsData[item]?.sellable === false}
+                      >
+                        {tradeAction}
+                      </button>
+                    </>
+                  ) : <span className="unsellable-note">(Not sellable)</span>
                   }
-                  <button
-                    className="trade-action"
-                    onClick={() => onTrade(item, quantities[item] || 1)}
-                    disabled={itemsData[item]?.sellable === false}
-                  >
-                    {tradeAction}
-                  </button>
                 </>
-              ) : <span className="unsellable-note">(Not sellable)</span>
-              }
-            </>
 
-            </div>
+              </div>
             </li>
-        ))}
+          )
+        })}
       </ul>
     </div>
   );

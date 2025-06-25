@@ -67,7 +67,7 @@ export const itemsData = {
     },
     beetroot: {
         quantity: 0,
-        displayName: "свещеният чукундур(цвекло)",
+        displayName: "цвекло", // свещеният чукундур(цвекло)
         picture: ""
     },
     soap: {
@@ -130,38 +130,40 @@ export const itemsData = {
     // Гъбки:
     // когато имам книгата да се покажат свойствата на гъбките
     // Приемаме че когато отхапеш само малко от гъбите, за дегустация на свойствата, те остават в инвентара като нахапани гъби?
-    mushroomSet: {
+    mushrooms: {
         sellable: false,
+        quantity: 0,
+        displayName: "шепа гъби",
         yellow: {
-            quantity: 0,
+            quantity: 1,
             displayName: "жълта гъба",
             description: "Увеличава онзи, който хапне от нея.",
             picture: "/img/mushroomYellow.jpg",
             showDescription: false // requireItem or visitedPages
         },
         blue: {
-            quantity: 0,
+            quantity: 1,
             displayName: "синя гъба",
             description: "Смалява многократно консуматора си.",
             picture: "/img/mushroomBlue.jpg",
             showDescription: false
         },
         red: {
-            quantity: 0,
+            quantity: 1,
             displayName: "червена гъба",
             description: "Силно намалява теглото.",
             picture: "/img/mushroomRed.jpg",
             showDescription: false
         },
         green: {
-            quantity: 0,
+            quantity: 1,
             displayName: "зелена гъба",
             description: "Увеличава теглото.",
             picture: "/img/mushroomGreen.jpg",
             showDescription: false
         },
         black: {
-            quantity: 0,
+            quantity: 1,
             displayName: "черна гъба",
             description: "Невероятно отровна, убива жертвата за броени минути.",
             picture: "/img/mushroomBlack.jpg",
