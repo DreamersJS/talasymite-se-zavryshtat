@@ -41,3 +41,57 @@
     background-color: #373737;
     color: white;
 }
+
+.showDescription {
+    background-color: #37373796;
+    color: white;
+    padding: 0.3rem;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    margin: 0.2rem;
+    z-index: 10;
+}
+
+/* .showDescription {
+    display: none;
+} */
+
+/* li:hover .showDescription {
+    display: block;
+   background-color: #37373796;
+    color: white;
+    padding: 0.3rem;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    margin: 0.2rem;
+  } */
+
+  .tooltip-wrapper {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+  }
+  
+  .tooltip-text {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    bottom: 125%; /* Show above the item */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #373737e6;
+    color: white;
+    padding: 0.3rem 0.5rem;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    white-space: nowrap;
+    z-index: 10;
+    transition: opacity 0.2s ease-in-out;
+    pointer-events: none;
+  }
+  
+  .tooltip-wrapper:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+  }
+  
