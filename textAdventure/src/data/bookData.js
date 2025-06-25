@@ -1456,7 +1456,7 @@ export const bookData = {
 — Кой ще носи торбата?
   `,
       addToInventory: [
-        // { item: "bag", quantity: 1 }, //remove it when NaN is taken care of
+        // { item: "bottleEmpty", quantity: 1 }, //remove it when NaN is taken care of
         { item: "duck", quantity: 1 },
         { item: "corn", quantity: 3 },
         { item: "watermelon", quantity: 1 },
@@ -3846,6 +3846,8 @@ export const bookData = {
 Е, това е положението. Запиши си наличните провизии и след това премини на 197.
   `,
       addToInventory: [
+        // { item: "bottleEmpty", quantity: 1 }, //remove it when NaN is taken care of
+        // { item: "bottleOfWater", quantity: 1 },
         { item: "duck", quantity: 1 },
         { item: "corn", quantity: 3 },
         { item: "watermelon", quantity: 1 },
