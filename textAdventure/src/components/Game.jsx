@@ -200,7 +200,7 @@ export const Game = () => {
 
     return (
         <div className="game">
-            {/* <Header></Header> */}
+            <Header></Header>
             <h3>{currentPage}</h3>
             <p>{pageData?.text}</p>
             {filteredChoices.map((choice, index) => (
@@ -227,14 +227,3 @@ export const Game = () => {
         </div>
     );
 };
-
-/**
- * Uncaught Error: Objects are not valid as a React child (found: object with keys {quantity, displayName, picture}). If you meant to render a collection of children, use an array instead.
-    React 20
-    plusOne Inventory.jsx:15
-    onClick Inventory.jsx:33
-    React 23
-    <anonymous> main.jsx:6
-react-dom.development.js:13123:8
-
- */

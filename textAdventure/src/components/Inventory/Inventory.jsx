@@ -55,6 +55,7 @@ export const Inventory = ({ title, inventory, onTrade, tradeAction, prices }) =>
           }
 
           return (
+            <div className='inventoryModal'>
             <li key={item}>
               {/* {item} */}
               <div className="tooltip-wrapper">
@@ -73,7 +74,7 @@ export const Inventory = ({ title, inventory, onTrade, tradeAction, prices }) =>
 
                 {/* sellable */}
                 <>
-                  {itemsData[item]?.sellable !== false ? (
+                  {tradeAction && prices && prices[item] && itemsData[item]?.sellable !== false ? (
                     <>
                       {/* +- quantity buttons */}
                       <button className='quantity-minus' onClick={() => minusOne(item)} disabled={(quantities[item] || 1) <= 1}></button>
@@ -94,12 +95,15 @@ export const Inventory = ({ title, inventory, onTrade, tradeAction, prices }) =>
                         {tradeAction}
                       </button>
                     </>
-                  ) : <span className="unsellable-note">(Not sellable)</span>
+                  ) : tradeAction!=="no"?
+                  <span className="unsellable-note">(Not sellable)</span>:
+                  null
                   }
                 </>
 
               </div>
             </li>
+            </div>
           )
         })}
       </ul>
