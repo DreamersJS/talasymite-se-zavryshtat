@@ -13,10 +13,10 @@ import {
     newHasItem,
     newRemoveItem,
 } from '../services/gameUtils.js';
-import { initialAdventureDiary } from '../adventureDiary.js';
+import { initialAdventureDiary } from '../data/adventureDiary.js';
 import { Inventory } from './Inventory/Inventory.jsx';
 import './Game.css';
-import { traderInventory as initialTraderInventory } from '../traderInventory.js';
+import { traderInventory as initialTraderInventory } from '../data/traderInventory.js';
 import { addGold, removeGold } from '../services/trade.service.js';
 import { Header } from './Header/Header.jsx';
 import { itemsData } from '../data/itemsData.js';

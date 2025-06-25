@@ -1,6 +1,6 @@
 import './Header.css'
 import bag from '/img/bag.jpeg';
-import { initialAdventureDiary as adventureDiary  } from '../../adventureDiary';
+import { initialAdventureDiary as adventureDiary  } from '../../data/adventureDiary';
 import { itemsData } from '../../data/itemsData';
 import React, { useEffect, useState } from 'react';
 
