@@ -19,7 +19,7 @@
 
 /* Modal Container */
 .modal-content {
-  padding: 3rem;
+  padding: 2rem;
   background-color: rgb(255, 255, 255);
   border-radius: 0.5rem;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
@@ -59,6 +59,8 @@
 
 .trade ul {
   list-style-type: none;
+  margin: 0;
+  padding: 0;/*probably the ul tag pushes elements a little to the right?  */
 }
 
 .close {

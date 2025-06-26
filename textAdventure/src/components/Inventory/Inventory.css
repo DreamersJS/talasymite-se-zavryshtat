@@ -33,7 +33,6 @@
 }
 
 .trade-action {
-  margin: 10px 0px 0px 10px;
   padding: 0.5em;
 }
 
@@ -70,4 +69,10 @@
 .tooltip-wrapper:hover .tooltip-text {
   visibility: visible;
   opacity: 1;
+}
+
+.list-items {
+padding: 5px;
+width: 100%;
+box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
 }

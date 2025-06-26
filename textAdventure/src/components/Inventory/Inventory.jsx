@@ -27,7 +27,7 @@ export const Inventory = ({ title, inventory, onTrade, tradeAction, prices }) =>
 
           if (isComposite) {
             return (
-              <li key={item}>
+              <li  key={item}>
                 <strong>{itemData.displayName}</strong>
                 {itemData.sellable == false && <span className="unsellable-note">(Not sellable)</span>}
                 <ul>
@@ -38,7 +38,7 @@ export const Inventory = ({ title, inventory, onTrade, tradeAction, prices }) =>
                     ) return null;
 
                     return (
-                      <li key={key} className="tooltip-wrapper">
+                      <li key={key} className="tooltip-wrapper"> 
                         <p>
                           <span><img src={subItem.picture} alt="Mushrooms" style={{ height: '25px' }} /></span>
                           {subItem.displayName}
@@ -57,7 +57,7 @@ export const Inventory = ({ title, inventory, onTrade, tradeAction, prices }) =>
           return (
             <div>
               <li key={item}>
-                <div className="tooltip-wrapper">
+                <div className="tooltip-wrapper  list-items">
                   <strong>
                     {itemsData[item].displayName}
                   </strong>

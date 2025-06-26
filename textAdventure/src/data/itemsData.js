@@ -89,7 +89,7 @@ export const itemsData = {
     },
     duck: {
         quantity: 0,
-        displayName: "патка",
+        displayName: "патица",
         description: "Патицата на Хухавел",
         picture: ""
     },
