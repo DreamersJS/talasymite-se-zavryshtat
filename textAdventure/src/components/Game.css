@@ -1,7 +1,30 @@
 .game {
   position: relative;
+  width: 100%;
+  height: 100%;
+}
+.modal-overlay {
+  /* close the modal by clicking on black screen*/
+  position: fixed; /* was relative — change to fixed so it covers screen */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.5); /* black transparent background */
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
+/* Modal Container */
+.modal-content {
+  padding: 3rem;
+  background-color: rgb(255, 255, 255);
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  z-index: 150;
+}
 .trade {
   text-align: center;
   margin: 5px;
@@ -16,6 +39,8 @@
 
 .inventories {
   display: flex;
+  flex-direction: column;
+  gap: 1rem;
   justify-content: space-between;
   padding: 10px;
   max-width: 100%;
@@ -44,4 +69,50 @@
   padding-bottom: 0;
   right: 0;
   background-color: rgb(231, 228, 228);
+}
+/* Show toggle buttons only on small screens */
+.inventory-toggle-buttons {
+  display: none;
+  margin-bottom: 1rem;
+}
+
+.inventory-toggle-buttons button {
+  margin-right: 1rem;
+  padding: 0.5em 1em;
+  font-weight: bold;
+  border: 1px solid #999;
+  background-color: #eee;
+}
+
+.inventory-toggle-buttons button.active {
+  background-color: #373737;
+  color: white;
+}
+
+/* Default to showing both inventories side-by-side */
+.inventory-wrapper {
+  display: flex;
+  gap: 2rem;
+  justify-content: space-evenly;
+}
+
+/* Responsive changes */
+@media (max-width: 768px) {
+  .inventory-wrapper {
+    flex-direction: column;
+  }
+
+  .inventory-toggle-buttons {
+    display: flex;
+  }
+
+  .npc-inventory,
+  .player-inventory {
+    display: none;
+  }
+
+  .npc-inventory.active,
+  .player-inventory.active {
+    display: block;
+  }
 }

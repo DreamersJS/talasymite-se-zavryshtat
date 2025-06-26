@@ -30,6 +30,8 @@ export const Game = () => {
     const [adventureDiary, setAdventureDiary] = useState({ ...initialAdventureDiary });
     const [traderInventory, setTraderInventory] = useState({ ...initialTraderInventory });
     const pageData = bookData.pages[currentPage];
+    const [activeInventory, setActiveInventory] = useState('npc'); // or 'player'
+
 
     useEffect(() => {
         if (page) {
@@ -109,12 +111,12 @@ export const Game = () => {
         if (choice.removeFromInventory) {
             // removeItem(adventureDiary, choice.removeFromInventory);
             const itemsToRemove = Array.isArray(choice.removeFromInventory)
-            ? choice.removeFromInventory
-            : [choice.removeFromInventory];
+                ? choice.removeFromInventory
+                : [choice.removeFromInventory];
 
-        itemsToRemove.forEach(item => {
-            newRemoveItem(adventureDiary, item.item, item.quantity);
-        });
+            itemsToRemove.forEach(item => {
+                newRemoveItem(adventureDiary, item.item, item.quantity);
+            });
             // newRemoveItem(adventureDiary, choice.removeFromInventory.item, choice.removeFromInventory.quantity);
             setAdventureDiary({ ...adventureDiary });
         }
@@ -176,7 +178,7 @@ export const Game = () => {
             if (adventureDiary.gold >= totalCost) {
                 removeGold(adventureDiary, totalCost);
                 // addItem(adventureDiary, item, quantity);
-                newAddItem(adventureDiary,item, quantity, {}, itemsData);
+                newAddItem(adventureDiary, item, quantity, {}, itemsData);
                 // removeItem(traderInventory, { item, quantity });
                 newRemoveItem(traderInventory, item, quantity);
                 addGold(traderInventory, totalCost);
@@ -184,7 +186,7 @@ export const Game = () => {
                 console.log("Not enough gold to buy");
             }
         } else {
-            if (newHasItem(adventureDiary, item, quantity )) {
+            if (newHasItem(adventureDiary, item, quantity)) {
                 addGold(adventureDiary, totalCost);
                 newRemoveItem(adventureDiary, item, quantity);
                 newAddItem(traderInventory, item, quantity, {}, itemsData);
@@ -219,9 +221,35 @@ export const Game = () => {
                 <div className="trade">
                     <button className="close" onClick={toggleModal}>close</button>
                     <div className="inventories">
-                        <Inventory title="NPC Inventory" inventory={traderInventory} onTrade={(item, quantity) => handleTrade(item, quantity)} tradeAction="Buy" prices={traderInventory.prices} />
-                        <Inventory title="Player Inventory" inventory={adventureDiary} onTrade={(item, quantity) => handleTrade(item, quantity)} tradeAction="Sell" prices={traderInventory.prices} />
-                    </div>
+  {/* Toggle buttons visible only on small screens */}
+  <div className="inventory-toggle-buttons">
+    <button onClick={() => setActiveInventory('npc')} className={activeInventory === 'npc' ? 'active' : ''}>NPC</button>
+    <button onClick={() => setActiveInventory('player')} className={activeInventory === 'player' ? 'active' : ''}>Player</button>
+  </div>
+
+  <div className="inventory-wrapper">
+    {/* Always show both on large screens */}
+    <div className={`inventory npc-inventory ${activeInventory === 'npc' ? 'active' : ''}`}>
+      <Inventory
+        title="NPC Inventory"
+        inventory={traderInventory}
+        onTrade={handleTrade}
+        tradeAction="Buy"
+        prices={traderInventory.prices}
+      />
+    </div>
+    <div className={`inventory player-inventory ${activeInventory === 'player' ? 'active' : ''}`}>
+      <Inventory
+        title="Player Inventory"
+        inventory={adventureDiary}
+        onTrade={handleTrade}
+        tradeAction="Sell"
+        prices={traderInventory.prices}
+      />
+    </div>
+  </div>
+</div>
+
                 </div>
             )}
         </div>
