@@ -30,6 +30,8 @@ export const Game = () => {
     const [adventureDiary, setAdventureDiary] = useState({ ...initialAdventureDiary });
     const [traderInventory, setTraderInventory] = useState({ ...initialTraderInventory });
     const pageData = bookData.pages[currentPage];
+    const [activeInventory, setActiveInventory] = useState('npc'); // or 'player'
+
 
     useEffect(() => {
         if (page) {
@@ -219,9 +221,35 @@ export const Game = () => {
                 <div className="trade">
                     <button className="close" onClick={toggleModal}>close</button>
                     <div className="inventories">
-                        <Inventory title="NPC Inventory" inventory={traderInventory} onTrade={(item, quantity) => handleTrade(item, quantity)} tradeAction="Buy" prices={traderInventory.prices} />
-                        <Inventory title="Player Inventory" inventory={adventureDiary} onTrade={(item, quantity) => handleTrade(item, quantity)} tradeAction="Sell" prices={traderInventory.prices} />
-                    </div>
+  {/* Toggle buttons visible only on small screens */}
+  <div className="inventory-toggle-buttons">
+    <button onClick={() => setActiveInventory('npc')} className={activeInventory === 'npc' ? 'active' : ''}>NPC</button>
+    <button onClick={() => setActiveInventory('player')} className={activeInventory === 'player' ? 'active' : ''}>Player</button>
+  </div>
+
+  <div className="inventory-wrapper">
+    {/* Always show both on large screens */}
+    <div className={`inventory npc-inventory ${activeInventory === 'npc' ? 'active' : ''}`}>
+      <Inventory
+        title="NPC Inventory"
+        inventory={traderInventory}
+        onTrade={handleTrade}
+        tradeAction="Buy"
+        prices={traderInventory.prices}
+      />
+    </div>
+    <div className={`inventory player-inventory ${activeInventory === 'player' ? 'active' : ''}`}>
+      <Inventory
+        title="Player Inventory"
+        inventory={adventureDiary}
+        onTrade={handleTrade}
+        tradeAction="Sell"
+        prices={traderInventory.prices}
+      />
+    </div>
+  </div>
+</div>
+
                 </div>
             )}
         </div>
