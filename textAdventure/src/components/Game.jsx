@@ -109,12 +109,12 @@ export const Game = () => {
         if (choice.removeFromInventory) {
             // removeItem(adventureDiary, choice.removeFromInventory);
             const itemsToRemove = Array.isArray(choice.removeFromInventory)
-            ? choice.removeFromInventory
-            : [choice.removeFromInventory];
+                ? choice.removeFromInventory
+                : [choice.removeFromInventory];
 
-        itemsToRemove.forEach(item => {
-            newRemoveItem(adventureDiary, item.item, item.quantity);
-        });
+            itemsToRemove.forEach(item => {
+                newRemoveItem(adventureDiary, item.item, item.quantity);
+            });
             // newRemoveItem(adventureDiary, choice.removeFromInventory.item, choice.removeFromInventory.quantity);
             setAdventureDiary({ ...adventureDiary });
         }
@@ -176,7 +176,7 @@ export const Game = () => {
             if (adventureDiary.gold >= totalCost) {
                 removeGold(adventureDiary, totalCost);
                 // addItem(adventureDiary, item, quantity);
-                newAddItem(adventureDiary,item, quantity, {}, itemsData);
+                newAddItem(adventureDiary, item, quantity, {}, itemsData);
                 // removeItem(traderInventory, { item, quantity });
                 newRemoveItem(traderInventory, item, quantity);
                 addGold(traderInventory, totalCost);
@@ -184,7 +184,7 @@ export const Game = () => {
                 console.log("Not enough gold to buy");
             }
         } else {
-            if (newHasItem(adventureDiary, item, quantity )) {
+            if (newHasItem(adventureDiary, item, quantity)) {
                 addGold(adventureDiary, totalCost);
                 newRemoveItem(adventureDiary, item, quantity);
                 newAddItem(traderInventory, item, quantity, {}, itemsData);
