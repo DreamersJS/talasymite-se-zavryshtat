@@ -1,86 +1,63 @@
 import './Header.css'
-import bag from '../../img/bag.jpeg';
-import mushroomYellow from '../../img/mushroomYellow.jpg';
-import mushroomBlue from '../../img/mushroomBlue.jpg';
-import mushroomRed from '../../img/mushroomRed.jpg';
-import mushroomGreen from '../../img/mushroomGreen.jpg';
-import mushroomBlack from '../../img/mushroomBlack.jpg';
-import { adventureDiary } from '../../adventureDiary';
+import bag from '/img/bag.jpeg';
+import { initialAdventureDiary as adventureDiary } from '../../data/adventureDiary';
+import { itemsData } from '../../data/itemsData';
+import React, { useEffect, useState } from 'react';
+import { Inventory } from '../Inventory/Inventory';
 
 export const Header = () => {
-    // onClick for Inventory-> modal pop up with some ugly pics of items, on hover names of items? // Sacred or Dragon Age: Origins?
-    // relation tables for items, which pic answers to which item?
+    /*
+    Inventory- for player to see items and descriptions only not intended for trade
+    */
+    const [isModalVisible, setIsModalVisible] = useState(false);
+
+    const toggleModal = () => {
+        setIsModalVisible(prev => !prev);
+    };
+
     return (
         <header>
 
-            <div>
-                <img src={bag} style={{ height: '40px' }} alt="Inventory" />
-            </div>
+            {!isModalVisible && (<div>
+                {/* <button onClick={toggleModal}> */}
+                <img src={bag} onClick={toggleModal} style={{ height: '40px' }} alt="Inventory" />
+                {/* </button> */}
+            </div>)}
 
-            {adventureDiary.bagCarrier && (
-                <>
-                    <div>
-                        <p>Bag Holder: <br />{adventureDiary.bagCarrier}</p>
+            {isModalVisible && (
+                <div className="modal" id="inventory-modal">
+                    <div className="modal-overlay" onClick={toggleModal}></div>
+                    <div className="modal-content">
+                        {adventureDiary.bagCarrier && (
+                            <>
+                                <div>
+                                    <p>Bag Holder: <br />{adventureDiary.bagCarrier}</p>
+                                </div>
+                            </>
+                        )}
+
+                        {adventureDiary.secret.show && (
+                            <>
+                                <div>
+                                    <h3>Secret</h3>
+                                    <div >{adventureDiary.secret.text}</div>
+                                </div>
+                            </>
+                        )}
+
+                        <div className="">
+                            <Inventory
+                                title="Player Inventory"
+                                inventory={adventureDiary}
+                                onTrade={() => { }}
+                                tradeAction="no"
+                                prices={null}
+                            />
+                        </div>
                     </div>
-                </>
+                </div>
             )}
 
-            <div>
-                <div>
-                    {adventureDiary.mushroomProperties.yellow.show && (
-                        <>
-                            <img src={mushroomYellow} alt="Yellow Mushroom" style={{ height: '40px' }} />
-                            <p> {adventureDiary.mushroomProperties.yellow.show}</p>
-                        </>
-                    )
-                    }
-                </div>
-                <div>
-                    {adventureDiary.mushroomProperties.yellow.show && (
-                        <>
-                            <img src={mushroomBlue} alt="Blue Mushroom" style={{ height: '40px' }} />
-                            <p> {adventureDiary.mushroomProperties.blue.show}</p>
-                        </>
-                    )
-                    }
-                </div>
-                <div>
-                    {adventureDiary.mushroomProperties.red.show && (
-                        <>
-                            <img src={mushroomRed} alt="Red Mushroom" style={{ height: '40px' }} />
-                            <p> {adventureDiary.mushroomProperties.red.show}</p>
-                        </>
-                    )
-                    }
-                </div>
-                <div>
-                    {adventureDiary.mushroomProperties.green.show && (
-                        <>
-                            <img src={mushroomGreen} alt="Yellow Mushroom" style={{ height: '40px' }} />
-                            <p> {adventureDiary.mushroomProperties.green.show}</p>
-                        </>
-                    )
-                    }
-                </div>
-                <div>
-                    {adventureDiary.mushroomProperties.black.show && (
-                        <>
-                            <img src={mushroomBlack} alt="Black Mushroom" style={{ height: '40px' }} />
-                            <p> {adventureDiary.mushroomProperties.black.show}</p>
-                        </>
-                    )
-                    }
-                </div>
-            </div>
-
-            {adventureDiary.secret.show && (
-                <>
-                    <div>
-                        <h3>Secret</h3>
-                        <div id="secretDiv">{adventureDiary.secret.text}</div>
-                    </div>
-                </>
-            )}
 
         </header>
     );

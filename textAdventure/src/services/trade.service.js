@@ -1,14 +1,3 @@
-
-/**
- * 
- * @param {*} inventory trader/player inventory
- * @param {*} type buy/sell
- * @returns boolean inventory.gold >= cost
- */
-export function canAfford(inventory, item, quantity, type, prices) {
-  const cost = prices[item] ? prices[item][type] * quantity : 0;
-  return inventory.gold >= cost;
-}
 export function addGold(inventory, amount) {
   inventory.gold += amount;
 }
@@ -19,6 +8,21 @@ export function removeGold(inventory, amount) {
   }
   inventory.gold -= amount;
 }
-export function calculateCost(prices, item, quantity, type) {
-  return prices[item][type] * quantity;
-}
+
+export const incrementQuantity = (item, quantities, inventoryBag) => {
+  const current = quantities[item] || 1;
+  const max = inventoryBag[item]?.quantity || 1;
+  return {
+    ...quantities,
+    [item]: Math.min(current + 1, max),
+  };
+};
+
+export const decrementQuantity = (item, quantities) => {
+  const current = quantities[item] || 1;
+  return {
+    ...quantities,
+    [item]: Math.max(current - 1, 1),
+  };
+};
+

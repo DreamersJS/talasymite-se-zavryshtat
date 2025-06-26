@@ -2,9 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { bookData } from '../data/bookData.js';
 import {
-    hasItem,
-    addItem,
-    removeItem,
     emptyInventory,
     writeDiaryBagHolder,
     readDiaryBagHolder,
@@ -12,17 +9,22 @@ import {
     changeDiaryCondition,
     visitedPagesPush,
     visitedPagesCheck,
-    ResetDiary
+    newAddItem,
+    newHasItem,
+    newRemoveItem,
 } from '../services/gameUtils.js';
-import { initialAdventureDiary } from '../adventureDiary.js';
+import { initialAdventureDiary } from '../data/adventureDiary.js';
 import { Inventory } from './Inventory/Inventory.jsx';
 import './Game.css';
-import { traderInventory as initialTraderInventory } from '../traderInventory.js';
+import { traderInventory as initialTraderInventory } from '../data/traderInventory.js';
 import { addGold, removeGold } from '../services/trade.service.js';
+import { Header } from './Header/Header.jsx';
+import { itemsData } from '../data/itemsData.js';
+
 
 export const Game = () => {
-    let { page } = useParams(); 
-    const navigate = useNavigate(); 
+    let { page } = useParams();
+    const navigate = useNavigate();
     const [currentPage, setCurrentPage] = useState(parseInt(page, 10) || 1); // parseInt(page, 10) second arg is decimal sys
     const [openTrade, setOpenTrade] = useState(false);
     const [adventureDiary, setAdventureDiary] = useState({ ...initialAdventureDiary });
@@ -34,13 +36,13 @@ export const Game = () => {
             setCurrentPage(parseInt(page, 10));
         }
     }, [page]);
-    
+
     useEffect(() => {
         if (adventureDiary) {
             console.log(adventureDiary);
         }
     }, [adventureDiary]);
-    
+
     useEffect(() => {
         navigate(`/game/${currentPage}`, { replace: true });
     }, [currentPage, navigate]);
@@ -48,36 +50,41 @@ export const Game = () => {
     useEffect(() => {
         if (currentPage !== 1 && !visitedPagesCheck(adventureDiary, currentPage)) {
             let updated = false;
-    
+
             if (pageData.removeFromInventory) {
-                pageData.removeFromInventory.forEach(item => {
-                    removeItem(adventureDiary, item);
+                const itemsToRemove = Array.isArray(pageData.removeFromInventory)
+                    ? pageData.removeFromInventory
+                    : [pageData.removeFromInventory];
+
+                itemsToRemove.forEach(item => {
+                    newRemoveItem(adventureDiary, item.item, item.quantity);
                 });
+
                 updated = true;
             }
-    
+
             if (pageData.addToInventory) {
                 pageData.addToInventory.forEach(obj => {
-                    addItem(adventureDiary, obj.item, obj.quantity);
+                    // addItem(adventureDiary, obj.item, obj.quantity);
+                    newAddItem(adventureDiary, obj.item, obj.quantity, {}, itemsData);
                 });
                 updated = true;
             }
-    
+
             if (pageData.emptyInventory) {
                 emptyInventory(adventureDiary);
                 updated = true;
             }
-    
+
             if (updated) {
                 visitedPagesPush(adventureDiary, currentPage); // mark the page as visited
                 setAdventureDiary({ ...adventureDiary });
             }
         }
     }, [currentPage, pageData, adventureDiary]);
-     // must fix tha loop
 
     const handleChoice = (nextPage, choice) => {
-        if (choice.requiresItem && !hasItem(adventureDiary.bag, choice.requiresItem)) {
+        if (choice.requireItem && !newHasItem(adventureDiary, choice.requireItem.item, choice.requireItem.quantity)) {
             return;
         }
         if (choice.requiresCondition && !getDiaryCondition(adventureDiary.condition, choice.requiresCondition.condition)) {
@@ -94,12 +101,21 @@ export const Game = () => {
 
         if (choice.addToInventory) {
             choice.addToInventory.forEach(obj => {
-                addItem(adventureDiary, obj.item, obj.quantity);
+                // addItem(adventureDiary, obj.item, obj.quantity);
+                newAddItem(adventureDiary, obj.item, obj.quantity, {}, itemsData);
             });
             setAdventureDiary({ ...adventureDiary });
         }
         if (choice.removeFromInventory) {
-            removeItem(adventureDiary, choice.removeFromInventory);
+            // removeItem(adventureDiary, choice.removeFromInventory);
+            const itemsToRemove = Array.isArray(choice.removeFromInventory)
+            ? choice.removeFromInventory
+            : [choice.removeFromInventory];
+
+        itemsToRemove.forEach(item => {
+            newRemoveItem(adventureDiary, item.item, item.quantity);
+        });
+            // newRemoveItem(adventureDiary, choice.removeFromInventory.item, choice.removeFromInventory.quantity);
             setAdventureDiary({ ...adventureDiary });
         }
         if (choice.bagCarrier) {
@@ -131,25 +147,25 @@ export const Game = () => {
         );
     }
     const filteredChoices = pageData?.choices.filter(choice => {
-        const meetsItemRequirement = !choice.requiresItem || hasItem(adventureDiary.bag, choice.requiresItem);
+        // const meetsItemRequirement = !choice.requireItem || hasItem(adventureDiary.bag, choice.requireItem);
+        const meetsItemRequirement = !choice.requireItem || newHasItem(adventureDiary, choice.requireItem.item, choice.requireItem.quantity);
         const meetsConditionRequirement = !choice.requiresCondition || getDiaryCondition(adventureDiary.condition, choice.requiresCondition.condition);
         const meetsBagCarrierRequirement = !choice.requiresBagCarrier || readDiaryBagHolder(adventureDiary) === choice.requiresBagCarrier;
         const meetsVisitedPagesRequirement = !choice.visitedPages || visitedPagesCheck(adventureDiary, choice.visitedPages);
         return meetsItemRequirement && meetsConditionRequirement && meetsBagCarrierRequirement && meetsVisitedPagesRequirement;
     });
 
-
     const toggleModal = () => {
         setOpenTrade(prev => !prev);
     };
 
     function resetGame() {
-        const freshDiary = JSON.parse(JSON.stringify(initialAdventureDiary));  
+        const freshDiary = JSON.parse(JSON.stringify(initialAdventureDiary));
         setAdventureDiary(freshDiary);
         setCurrentPage(1);
         navigate(`/game/1`);
     }
-    
+
 
     const handleTrade = (item, quantity) => {
         const isBuying = !adventureDiary.bag.hasOwnProperty(item);
@@ -159,17 +175,19 @@ export const Game = () => {
         if (isBuying) {
             if (adventureDiary.gold >= totalCost) {
                 removeGold(adventureDiary, totalCost);
-                addItem(adventureDiary, item, quantity);
-                removeItem(traderInventory, { item, quantity });
+                // addItem(adventureDiary, item, quantity);
+                newAddItem(adventureDiary,item, quantity, {}, itemsData);
+                // removeItem(traderInventory, { item, quantity });
+                newRemoveItem(traderInventory, item, quantity);
                 addGold(traderInventory, totalCost);
             } else {
                 console.log("Not enough gold to buy");
             }
         } else {
-            if (hasItem(adventureDiary.bag, { item, quantity })) {
+            if (newHasItem(adventureDiary, item, quantity )) {
                 addGold(adventureDiary, totalCost);
-                removeItem(adventureDiary, { item, quantity });
-                addItem(traderInventory, item, quantity);
+                newRemoveItem(adventureDiary, item, quantity);
+                newAddItem(traderInventory, item, quantity, {}, itemsData);
                 removeGold(traderInventory, totalCost);
             } else {
                 console.log("Not enough item to sell");
@@ -182,6 +200,7 @@ export const Game = () => {
 
     return (
         <div className="game">
+            <Header></Header>
             <h3>{currentPage}</h3>
             <p>{pageData?.text}</p>
             {filteredChoices.map((choice, index) => (
@@ -208,13 +227,3 @@ export const Game = () => {
         </div>
     );
 };
-
-/**
- * Warning: Maximum update depth exceeded. This can happen when a component calls setState inside useEffect, but useEffect either doesn't have a dependency array, or one of the dependencies changes on every render. Component Stack: 
-    Game Game.jsx:24
-    RenderedRoute hooks.tsx:658
-    Routes components.tsx:506
-    Router components.tsx:420
-    BrowserRouter index.tsx:788
-    App unknown:0
- */
